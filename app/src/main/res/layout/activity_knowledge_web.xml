@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.rinkaze.wanandroid.ui.knowledge.activity.KnowledgeWebActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/webtoolbar"
+        android:background="@color/colorPrimary">
+        <ImageView
+            android:layout_marginLeft="@dimen/dp_13"
+            android:id="@+id/webtool_img"
+            android:background="@mipmap/b8"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30" />
+        <TextView
+            android:id="@+id/webtool_tv"
+            android:layout_marginLeft="@dimen/dp_35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1234"
+            android:textSize="@dimen/dp_20"
+            android:textColor="@color/c_ffffff"/>
+    </android.support.v7.widget.Toolbar>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/webll"></LinearLayout>
+</LinearLayout>
