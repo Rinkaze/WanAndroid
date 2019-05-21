@@ -1,6 +1,6 @@
 package com.rinkaze.wanandroid.view;
 
-
+import com.rinkaze.wanandroid.Bean.official.WxAuthor;
 import com.rinkaze.wanandroid.base.BaseMvpView;
 
 /**
@@ -8,4 +8,6 @@ import com.rinkaze.wanandroid.base.BaseMvpView;
  */
 
 public interface EmptyView extends BaseMvpView {
+
+
 }

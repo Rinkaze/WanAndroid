@@ -49,7 +49,7 @@
         <ImageView
             android:id="@+id/img_follow"
             android:layout_marginRight="@dimen/dp_10"
-            android:background="@mipmap/follow_unselected"
+            android:background="@mipmap/follow"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20" />
     </LinearLayout>

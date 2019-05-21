@@ -30,6 +30,9 @@
         <activity android:name=".ui.knowledge.activity.KnowledgeActivity" />
         <activity android:name=".ui.knowledge.activity.KnowledgeWebActivity"></activity>
 =======
+        
+        <activity android:name=".ui.official.activity.WebViewActivity"
+            ></activity>
         <activity android:name=".ui.main.activity.LoginActivity"></activity>
 >>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
     </application>

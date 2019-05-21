@@ -8,4 +8,6 @@ import com.rinkaze.wanandroid.base.BaseModel;
  */
 
 public class EmptyModel extends BaseModel {
+
+
 }
