@@ -10,7 +10,7 @@ public class SimpleItemTouchCallBack extends ItemTouchHelper.Callback {
     private boolean mSwipeEnable = true;
 
     public SimpleItemTouchCallBack(TouchCallBack callBack) {
-        this.mCallBack = callBack;
+        mCallBack = callBack;
     }
 
     /**

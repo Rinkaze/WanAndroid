@@ -25,4 +25,9 @@
     <string name="go_reg">没有账号？去注册</string>
     <string name="go_login">已有账户？去登录</string>
     <string name="reg">注册</string>
+
+    <string name="name">玩安卓微信小程序</string>
+    <string name="title">用来学习的安卓的微信小程序</string>
+    <string name="author">author</string>
+    <string name="niceData">niceData</string>
 </resources>

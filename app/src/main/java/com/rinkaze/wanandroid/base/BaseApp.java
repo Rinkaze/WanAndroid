@@ -7,8 +7,17 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.rinkaze.wanandroid.R;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+
 public class BaseApp extends Application {
-    private static BaseApp sBaseApp;
+    public static BaseApp sBaseApp;
     public static int mWidthPixels;
     public static int mHeightPixels;
 
@@ -37,4 +46,8 @@ public class BaseApp extends Application {
         return sBaseApp.getResources();
     }
 
+
+
 }
+
+

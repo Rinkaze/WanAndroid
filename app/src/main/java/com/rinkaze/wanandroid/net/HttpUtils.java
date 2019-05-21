@@ -1,6 +1,7 @@
 package com.rinkaze.wanandroid.net;
 import android.util.Log;
 
+
 import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.utils.SystemUtil;
 
@@ -108,7 +109,6 @@ public class HttpUtils {
                                 " max-stale=" + maxStale)
                         .build();
             }
-
         }
     }
 
