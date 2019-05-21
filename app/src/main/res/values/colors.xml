@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#23a7cf</color>
     <color name="colorAccent">#FF4081</color>
     <color name="transparent">#00ffffff</color>
+    <color name="red">#E92020</color>
+    <color name="c_666">#666666</color>
+    <color name="c_333">#333333</color>
+    <color name="c_e98f36">#e98f36</color>
+    <color name="c_eaeaea">#eaeaea</color>
 </resources>
