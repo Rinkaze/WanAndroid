@@ -7,11 +7,4 @@
     android:orientation="vertical"
     tools:context="com.rinkaze.wanandroid.ui.main.activity.MainActivity">
 
-
-    <FrameLayout
-        android:id="@+id/fra"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
 </LinearLayout>
