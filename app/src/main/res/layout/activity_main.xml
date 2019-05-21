@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+=======
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.main.activity.MainActivity">
+    tools:context="com.rinkaze.wanandroid.ui.main.activity.MainActivity">
+<android.support.design.widget.TabLayout
+    android:id="@+id/tab"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
+<<<<<<< HEAD
+
+</LinearLayout>
+=======
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -65,3 +83,4 @@
         app:menu="@menu/nav_main_menu" />
 
 </android.support.v4.widget.DrawerLayout>
+>>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08

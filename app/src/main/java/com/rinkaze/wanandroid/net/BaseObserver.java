@@ -5,7 +5,6 @@ import android.net.ParseException;
 import com.google.gson.JsonParseException;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseApp;
-import com.rinkaze.wanandroid.utils.Logger;
 import com.rinkaze.wanandroid.utils.SystemUtil;
 import com.rinkaze.wanandroid.utils.ToastUtil;
 
@@ -14,6 +13,7 @@ import org.json.JSONException;
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
+import java.util.logging.Logger;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -43,8 +43,8 @@ public abstract class BaseObserver<T> implements Observer<T> {
     public static final int CONNECT_TIMEOUT = 1004;
 
     @Override
-    public void onError(Throwable e) {
-        Logger.logD(TAG, "error: "+e.toString());
+    public void onError(Throwable e) { ;
+        com.rinkaze.wanandroid.utils.Logger.logD(TAG, "error: "+e.toString());
         if (e instanceof HttpException) {
             //   HTTP错误
             onException(BAD_NETWORK);
@@ -96,7 +96,7 @@ public abstract class BaseObserver<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
-        Logger.logD(TAG, "onComplete: ");
+        com.rinkaze.wanandroid.utils.Logger.logD(TAG, "onComplete: ");
     }
 
     @Override

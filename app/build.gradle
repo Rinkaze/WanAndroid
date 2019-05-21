@@ -90,7 +90,23 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0' // 必要依赖，和Rxjava结合必须用到，下面会提到
     implementation "io.reactivex.rxjava2:rxjava:2.1.3" // 必要rxjava2依赖
     implementation "io.reactivex.rxjava2:rxandroid:2.0.1" // 必要rxandrroid依赖，切线程时需要用到
-    implementation 'com.jakewharton:butterknife:8.8.1'                //butterknife
+<<<<<<< HEAD
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //ButterKnife
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+//Glide4解析图片
+
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'
+//SmartRefreshLayout setOnRefreshLoadmoreListener
+    implementation 'com.just.agentweb:agentweb:2.0.0'
+    //webview
+=======
+    implementation 'com.github.bumptech.glide:glide:4.8.0'                //Glide4x
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'

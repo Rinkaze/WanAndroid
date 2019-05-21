@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.rinkaze.wanandroid.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -66,8 +67,10 @@ public abstract class BaseFragment<V extends BaseMvpView,P extends BasePresenter
 
     @Override
     public void showLoading() {
+
         if (mLoadingDialog == null){
             mLoadingDialog = new LoadingDialog(getContext());
+
         }
         mLoadingDialog.show();
     }
