@@ -15,6 +15,7 @@ import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseFragment;
 import com.rinkaze.wanandroid.presenter.officialpresenter.OfficialPresenter;
 import com.rinkaze.wanandroid.ui.official.adapter.OfficialViewPagerAdapter;
+import com.rinkaze.wanandroid.utils.Logger;
 import com.rinkaze.wanandroid.view.officialview.OfficialView;
 
 import java.util.ArrayList;
@@ -98,6 +99,6 @@ public class OfficialFragment extends BaseFragment<OfficialView, OfficialPresent
 
     @Override
     public void getFailed(String msg) {
-
+        Logger.logD(TAG,msg);
     }
 }

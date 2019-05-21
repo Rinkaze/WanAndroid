@@ -6,13 +6,13 @@ import com.rinkaze.wanandroid.net.BaseObserver;
 import com.rinkaze.wanandroid.net.HttpUtils;
 import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.RxUtils;
-import com.rinkaze.wanandroid.net.WanAndroidAPI;
+import com.rinkaze.wanandroid.net.WanAndroidApi;
 
 import io.reactivex.disposables.Disposable;
 
 public class OfficialMoudle extends BaseModel {
     public  void getAutherData(final ResultCallBack<WxAuthor> callBack){
-        WanAndroidAPI apiserver = HttpUtils.getInstance().getApiserver(WanAndroidAPI.BASE_URL, WanAndroidAPI.class);
+        WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.BASE_URL, WanAndroidApi.class);
         apiserver.getWxAuthorListData()
                 .compose(RxUtils.<WxAuthor>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<WxAuthor>() {

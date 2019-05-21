@@ -27,6 +27,7 @@
         android:text="做相机？"
         android:id="@+id/item_title"
         android:layout_below="@id/item_name"
+        android:textSize="@dimen/sp_16"
         android:layout_marginLeft="@dimen/dp_10"
 
         android:textColor="@color/c_111111"

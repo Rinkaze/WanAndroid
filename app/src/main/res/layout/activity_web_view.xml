@@ -4,7 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
+
     tools:context="com.rinkaze.wanandroid.ui.official.activity.WebViewActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:id="@+id/web_toolbar"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:src="@mipmap/back_white"
+                android:id="@+id/web_back"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="标题"
+                android:layout_toRightOf="@id/web_back"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:id="@+id/web_title"
+                />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container"
+        android:layout_below="@id/web_toolbar"
+        ></RelativeLayout>
 
 </RelativeLayout>
