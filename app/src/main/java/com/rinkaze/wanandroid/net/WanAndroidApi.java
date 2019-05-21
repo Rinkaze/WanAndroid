@@ -1,18 +1,22 @@
 package com.rinkaze.wanandroid.net;
 
-import com.rinkaze.wanandroid.Bean.official.FeedArticleListData;
-import com.rinkaze.wanandroid.Bean.official.WxAuthor;
-
-import java.util.List;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.WxAuthor;
+import com.rinkaze.wanandroid.bean.LoginInfo;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
+/**
+ * Created by 灵风 on 2019/5/21.
+ */
+
 public interface WanAndroidApi {
-    public String BASE_URL = "https://www.wanandroid.com/";
-
-
+    int SUCCESS_CODE = 0;   //请求成功的状态码
     /* 获取公众号列表
      * http://wanandroid.com/wxarticle/chapters/json
      *
@@ -31,4 +35,27 @@ public interface WanAndroidApi {
     @GET("wxarticle/list/{id}/{page}/json")
     Observable<FeedArticleListData> getWxSumData(@Path("id") int id, @Path("page") int page);
 
+
+    String baseUrl = "https://www.wanandroid.com/";
+
+    /**
+     * 登录接口
+     * @param username  用户名
+     * @param psw       密码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("user/login")
+    Observable<LoginInfo> login(@Field("username")String username, @Field("password")String psw);
+
+    /**
+     * 注册接口
+     * @param username  用户名
+     * @param psw       密码
+     * @param rePsw     重复密码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    Observable<LoginInfo> register(@Field("username")String username, @Field("password")String psw,@Field("repassword")String rePsw);
 }
