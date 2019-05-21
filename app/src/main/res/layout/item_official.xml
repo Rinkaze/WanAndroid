@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_name"
+        android:text="鸿洋"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/c_787878"
+        android:layout_margin="@dimen/dp_10"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2019-05-17"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/dp_10"
+        android:id="@+id/item_time"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="做相机？"
+        android:id="@+id/item_title"
+        android:layout_below="@id/item_name"
+        android:layout_marginLeft="@dimen/dp_10"
+
+        android:textColor="@color/c_111111"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公众号/鸿洋"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
+        android:id="@+id/item_official"
+        android:layout_below="@id/item_title"
+        android:textSize="@dimen/sp_12"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_collect"
+        android:src="@mipmap/follow_unselected"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/item_official"
+        android:layout_marginRight="@dimen/dp_10"
+        />
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_1"
+    android:background="@color/c_A0A0A0"
+    android:layout_below="@id/item_collect"
+    android:layout_marginTop="@dimen/dp_10"
+    />
+</RelativeLayout>
