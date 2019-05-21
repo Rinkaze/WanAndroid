@@ -149,6 +149,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.main_floating_action_btn:
+                //滑动到页面顶部
                 mDl.scrollTo(0,0);
                 break;
         }
