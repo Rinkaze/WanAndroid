@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rinkaze.wanandroid">
+<<<<<<< HEAD
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+=======
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+>>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
 
     <application
         android:name=".base.BaseApp"
@@ -20,8 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".ui.knowledge.activity.KnowledgeActivity" />
         <activity android:name=".ui.knowledge.activity.KnowledgeWebActivity"></activity>
+=======
+        <activity android:name=".ui.main.activity.LoginActivity"></activity>
+>>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
     </application>
 
 </manifest>

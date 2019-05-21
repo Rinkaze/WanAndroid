@@ -4,10 +4,18 @@
     <color name="colorPrimaryDark">#23a7cf</color>
     <color name="colorAccent">#FF4081</color>
     <color name="transparent">#00ffffff</color>
+<<<<<<< HEAD
     <color name="c_666666">#666666</color>
     <color name="c_333333">#333333</color>
     <color name="c_999999">#999999</color>
     <color name="c_ffffff">#ffffff</color>
     <color name="c_F4F1F1">#F4F1F1</color>
     <color name="c_323131">#323131</color>
+=======
+    <color name="red">#E92020</color>
+    <color name="c_666">#666666</color>
+    <color name="c_333">#333333</color>
+    <color name="c_e98f36">#e98f36</color>
+    <color name="c_eaeaea">#eaeaea</color>
+>>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
 </resources>
