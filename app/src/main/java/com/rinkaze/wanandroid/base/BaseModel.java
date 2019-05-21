@@ -12,6 +12,7 @@ import io.reactivex.disposables.Disposable;
 public class BaseModel {
     private CompositeDisposable mCompositeDisposable;
 
+
     public void onDestory() {
         //切换所有的Disposable对象
         if (mCompositeDisposable != null){
