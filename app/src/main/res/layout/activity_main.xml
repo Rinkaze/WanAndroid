@@ -36,6 +36,7 @@
             android:id="@+id/main_floating_action_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:backgroundTint="@color/colorPrimary"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="@dimen/dp_70"
             android:layout_marginRight="@dimen/dp_16"
@@ -46,19 +47,21 @@
             android:id="@+id/tab"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
+            android:layout_gravity="bottom"
             android:background="@color/white"
-            app:tabIndicatorColor="@color/transparent"
-            app:tabTextColor="@color/c_333"
             app:layout_behavior="com.rinkaze.wanandroid.widget.BottomNavigationBehavior"
+            app:tabIndicatorColor="@color/transparent"
             app:tabSelectedTextColor="@color/c_e98f36"
-            android:layout_gravity="bottom"/>
+            app:tabTextColor="@color/c_333" />
 
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
+        android:id="@+id/nv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/nv"
-        android:layout_gravity="left"/>
+        android:layout_gravity="left"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/nav_main_menu" />
 
 </android.support.v4.widget.DrawerLayout>

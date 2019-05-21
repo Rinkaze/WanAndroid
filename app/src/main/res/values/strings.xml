@@ -11,4 +11,17 @@
     <string name="wechat">公众号</string>
     <string name="navigation">导航</string>
     <string name="project">项目</string>
+    <string name="collect">收藏</string>
+    <string name="todo">TODO</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="setting">设置</string>
+    <string name="about_us">关于我们</string>
+    <string name="logout">退出登录</string>
+    <string name="login">登录</string>
+    <string name="username">用户名</string>
+    <string name="psw">密码</string>
+    <string name="repsw">再输入一次密码</string>
+    <string name="go_reg">没有账号？去注册</string>
+    <string name="go_login">已有账户？去登录</string>
+    <string name="reg">注册</string>
 </resources>

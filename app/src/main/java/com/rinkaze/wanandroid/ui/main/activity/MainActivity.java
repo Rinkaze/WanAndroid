@@ -1,7 +1,10 @@
 package com.rinkaze.wanandroid.ui.main.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,12 +12,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
+import com.rinkaze.wanandroid.base.Constants;
+import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.presenter.EmptyPresenter;
+import com.rinkaze.wanandroid.utils.SpUtil;
 import com.rinkaze.wanandroid.view.EmptyView;
 
 import java.util.ArrayList;
@@ -33,6 +41,8 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     TabLayout mTab;
     @BindView(R.id.dl)
     DrawerLayout mDl;
+    @BindView(R.id.nv)
+    NavigationView mNv;
     private ArrayList<Fragment> fragments;
     private FragmentManager fragmentManager;
     private final int MAIN_TYPE = 0;
@@ -41,6 +51,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     private final int NAVIGATION_TYPE = 3;
     private final int PROJECT_TYPE = 4;
     private int lastPosition = 0;
+    private TextView tvLogin;
 
     @Override
     protected EmptyPresenter initPresenter() {
@@ -55,14 +66,27 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     @Override
     protected void initView() {
         mToolBar.setTitle("玩Android");
+        mToolBar.setNavigationIcon(null);
         //设置左上角侧滑开关并将颜色改为白色
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDl, mToolBar, 0, 0);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         mDl.addDrawerListener(toggle);
         toggle.syncState();
-        setSupportActionBar(mToolBar);
+        initNav();
         initTab();
         initFragment();
+    }
+
+    private void initNav() {
+        //解决侧滑菜单图标不显示问题
+        mNv.setItemIconTintList(null);
+        View headerView = mNv.getHeaderView(0);
+        tvLogin = headerView.findViewById(R.id.tv_login);
+        //判断如果用户已经登陆过，直接显示用户名
+        if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
+            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
+        }
+        tvLogin.setOnClickListener(this);
     }
 
     //添加Fragment并默认显示第一个Fragment
@@ -75,7 +99,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         fragments.add(new Fragment());
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction tran = fragmentManager.beginTransaction();
-        tran.add(R.id.fragment_container,fragments.get(0)).commit();
+        tran.add(R.id.fragment_container, fragments.get(0)).commit();
         mMainFloatingActionBtn.setOnClickListener(this);
     }
 
@@ -127,17 +151,19 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
 
             }
         });
+
     }
 
     /**
      * Fragment之间的切换
-     * @param type  要切换到哪个fragment
+     *
+     * @param type 要切换到哪个fragment
      */
     private void switchFragment(int type) {
         Fragment fragment = fragments.get(type);
         FragmentTransaction tran = fragmentManager.beginTransaction();
-        if (!fragment.isAdded()){
-            tran.add(R.id.fragment_container,fragment);
+        if (!fragment.isAdded()) {
+            tran.add(R.id.fragment_container, fragment);
         }
         tran.hide(fragments.get(lastPosition));
         tran.show(fragment);
@@ -150,8 +176,20 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         switch (view.getId()) {
             case R.id.main_floating_action_btn:
                 //滑动到页面顶部
-                mDl.scrollTo(0,0);
+                mDl.scrollTo(0, 0);
                 break;
+            case R.id.tv_login:
+                if (tvLogin.getText().toString().trim().equals("登录"))
+                startActivityForResult(new Intent(this,LoginActivity.class),100);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == WanAndroidApi.SUCCESS_CODE){
+            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
         }
     }
 }
