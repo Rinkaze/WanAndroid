@@ -109,7 +109,6 @@ public class HttpUtils {
                                 " max-stale=" + maxStale)
                         .build();
             }
-
         }
     }
 
