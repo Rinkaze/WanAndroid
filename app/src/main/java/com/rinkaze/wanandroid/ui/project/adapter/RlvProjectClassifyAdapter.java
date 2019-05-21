@@ -41,7 +41,7 @@ public class RlvProjectClassifyAdapter extends RecyclerView.Adapter {
         String desc = datasBean.getDesc();
         String author = datasBean.getAuthor();
         String niceDate = datasBean.getNiceDate();
-        GlideUtil.loadUrlRoundImg(R.mipmap.ic_launcher, R.mipmap.ic_launcher, envelopePic, viewHolders.mIv, mContext);
+        GlideUtil.loadImage(R.mipmap.ic_launcher, envelopePic, viewHolders.mIv, mContext);
 
 
 //        viewHolders.mTitles.setText(datasBean.getTitle());

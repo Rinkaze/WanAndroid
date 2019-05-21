@@ -1,6 +1,6 @@
 package com.rinkaze.wanandroid.presenter.officialpresenter;
 
-import com.rinkaze.wanandroid.Bean.official.WxAuthor;
+import com.rinkaze.wanandroid.bean.official.WxAuthor;
 import com.rinkaze.wanandroid.base.BasePresenter;
 import com.rinkaze.wanandroid.model.officialmoudle.OfficialMoudle;
 import com.rinkaze.wanandroid.net.ResultCallBack;

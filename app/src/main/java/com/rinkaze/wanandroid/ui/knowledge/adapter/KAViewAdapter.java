@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.Constants;
-import com.rinkaze.wanandroid.bean.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 
 import java.util.List;
 

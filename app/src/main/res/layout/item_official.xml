@@ -43,8 +43,8 @@
         android:textSize="@dimen/sp_12"
         />
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
         android:id="@+id/item_collect"
         android:src="@mipmap/follow_unselected"
         android:layout_alignParentRight="true"

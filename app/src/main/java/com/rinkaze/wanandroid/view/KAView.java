@@ -1,7 +1,7 @@
 package com.rinkaze.wanandroid.view;
 
 import com.rinkaze.wanandroid.base.BaseMvpView;
-import com.rinkaze.wanandroid.bean.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 
 public interface KAView extends BaseMvpView {
     void KAData(FeedArticleListData data);

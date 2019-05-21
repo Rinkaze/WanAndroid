@@ -12,7 +12,7 @@ import com.rinkaze.wanandroid.net.BaseObserver;
 import com.rinkaze.wanandroid.net.HttpUtils;
 import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.RxUtils;
-import com.rinkaze.wanandroid.net.WanAndroidAPi;
+import com.rinkaze.wanandroid.net.WanAndroidApi;
 
 import io.reactivex.disposables.Disposable;
 
@@ -20,7 +20,7 @@ public class KnowledgeModel extends BaseModel {
     private static final String TAG = "KnowledgeModel";
 
     public void onKnowledgeMode(final ResultCallBack<KnowledgeHierarchyData> callback){
-        WanAndroidAPi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidAPi.url, WanAndroidAPi.class);
+        WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
         apiserver.getKnowledgeHierarchyData()
                 .compose(RxUtils.<KnowledgeHierarchyData>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<KnowledgeHierarchyData>() {

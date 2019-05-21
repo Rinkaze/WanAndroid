@@ -1,7 +1,7 @@
 package com.rinkaze.wanandroid.presenter;
 
 import com.rinkaze.wanandroid.base.BasePresenter;
-import com.rinkaze.wanandroid.bean.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.model.KAModel;
 import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.view.KAView;

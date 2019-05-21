@@ -1,11 +1,17 @@
 package com.rinkaze.wanandroid.net;
 
+import com.rinkaze.wanandroid.bean.KnowledgeHierarchyData;
 import com.rinkaze.wanandroid.bean.LoginInfo;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.WxAuthor;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by 灵风 on 2019/5/21.
@@ -36,4 +42,28 @@ public interface WanAndroidApi {
     @FormUrlEncoded
     @POST("user/register")
     Observable<LoginInfo> register(@Field("username")String username, @Field("password")String psw,@Field("repassword")String rePsw);
+
+    /* 获取公众号列表
+     * http://wanandroid.com/wxarticle/chapters/json
+     *
+     * @return 公众号列表数据
+     */
+    @GET("wxarticle/chapters/json")
+    Observable<WxAuthor> getWxAuthorListData();
+
+    /* 获取当前公众号某页的数据
+     * http://wanandroid.com/wxarticle/list/405/1/json
+     *
+     * @param id
+     * @param page
+     * @return 获取当前公众号某页的数据
+     */
+    @GET("wxarticle/list/{id}/{page}/json")
+    Observable<FeedArticleListData> getWxSumData(@Path("id") int id, @Path("page") int page);
+
+    @GET("article/list/{page}/json")
+    Observable<FeedArticleListData> getKnowledgeHierarchyDetailData(@Path("page") int page,@Query("cid") int cid);
+
+    @GET("tree/json")
+    Observable<KnowledgeHierarchyData> getKnowledgeHierarchyData();
 }

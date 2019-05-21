@@ -1,6 +1,6 @@
 package com.rinkaze.wanandroid.model.officialmoudle;
 
-import com.rinkaze.wanandroid.Bean.official.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.base.BaseModel;
 import com.rinkaze.wanandroid.net.BaseObserver;
 import com.rinkaze.wanandroid.net.HttpUtils;
@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable;
 public class ChildMoudle extends BaseModel {
 
     public void getData(int id, int page, final ResultCallBack<FeedArticleListData> callBack){
-        WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.BASE_URL, WanAndroidApi.class);
+        WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
         apiserver.getWxSumData(id,page)
                 .compose(RxUtils.<FeedArticleListData>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<FeedArticleListData>() {

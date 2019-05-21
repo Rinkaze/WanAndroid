@@ -1,4 +1,4 @@
-package com.rinkaze.wanandroid.Bean.official;
+package com.rinkaze.wanandroid.bean.official;
 
 import java.util.List;
 

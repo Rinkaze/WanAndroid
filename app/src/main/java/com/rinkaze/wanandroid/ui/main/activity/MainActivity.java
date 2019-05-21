@@ -1,10 +1,8 @@
 package com.rinkaze.wanandroid.ui.main.activity;
 
-<<<<<<< HEAD
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-=======
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,40 +19,29 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
->>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
 
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
 import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.presenter.EmptyPresenter;
-<<<<<<< HEAD
-import com.rinkaze.wanandroid.ui.knowledge.adapter.FmAdapter;
-import com.rinkaze.wanandroid.ui.knowledge.fragment.EnFragment;
 import com.rinkaze.wanandroid.ui.knowledge.fragment.KnowledgeFm;
-=======
+import com.rinkaze.wanandroid.ui.main.fragment.MainFragment;
+import com.rinkaze.wanandroid.ui.navigation.fragment.NaviFragment;
+import com.rinkaze.wanandroid.ui.official.fragment.OfficialFragment;
+import com.rinkaze.wanandroid.ui.project.fragment.ProjectFragment;
 import com.rinkaze.wanandroid.utils.SpUtil;
->>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
 import com.rinkaze.wanandroid.view.EmptyView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 
-<<<<<<< HEAD
 
-public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implements EmptyView {
+public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implements EmptyView, View.OnClickListener {
 
-    @BindView(R.id.tab)
-    TabLayout mTab;
-    @BindView(R.id.vp)
-    ViewPager mVp;
     private String [] arr={"知识","我的"};
     private ArrayList<Fragment> list;
-    private FmAdapter fmAdapter;
-
-=======
-public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implements EmptyView, View.OnClickListener {
 
     @BindView(R.id.toolBar)
     Toolbar mToolBar;
@@ -77,7 +64,6 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     private final int PROJECT_TYPE = 4;
     private int lastPosition = 0;
     private TextView tvLogin;
->>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
 
     @Override
     protected EmptyPresenter initPresenter() {
@@ -91,20 +77,14 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
 
     @Override
     protected void initView() {
-<<<<<<< HEAD
         list = new ArrayList<>();
-        list.add(new KnowledgeFm());
-        list.add(new EnFragment());
-        fmAdapter = new FmAdapter(getSupportFragmentManager(), arr, list);
-        mVp.setAdapter(fmAdapter);
-        mTab.setupWithViewPager(mVp);
-=======
         mToolBar.setTitle("玩Android");
         mToolBar.setNavigationIcon(null);
         //设置左上角侧滑开关并将颜色改为白色
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDl, mToolBar, 0, 0);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         mDl.addDrawerListener(toggle);
+        mMainFloatingActionBtn.setOnClickListener(this);
         toggle.syncState();
         initNav();
         initTab();
@@ -126,15 +106,14 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     //添加Fragment并默认显示第一个Fragment
     private void initFragment() {
         fragments = new ArrayList<>();
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
+        fragments.add(new MainFragment());
+        fragments.add(new KnowledgeFm());
+        fragments.add(new OfficialFragment());
+        fragments.add(new NaviFragment());
+        fragments.add(new ProjectFragment());
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction tran = fragmentManager.beginTransaction();
         tran.add(R.id.fragment_container, fragments.get(0)).commit();
-        mMainFloatingActionBtn.setOnClickListener(this);
     }
 
     //给Tab栏添加Tab项
@@ -210,7 +189,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         switch (view.getId()) {
             case R.id.main_floating_action_btn:
                 //滑动到页面顶部
-                mDl.scrollTo(0, 0);
+                mFragmentContainer.scrollBy(0,0);
                 break;
             case R.id.tv_login:
                 if (tvLogin.getText().toString().trim().equals("登录"))
@@ -225,6 +204,5 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         if (requestCode == 100 && resultCode == WanAndroidApi.SUCCESS_CODE){
             tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
         }
->>>>>>> a673c4d3f7693fef2d342443bcbcad7cae426f08
     }
 }

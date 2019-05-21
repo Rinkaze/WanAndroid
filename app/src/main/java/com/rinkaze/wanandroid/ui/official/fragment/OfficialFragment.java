@@ -6,11 +6,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.rinkaze.wanandroid.Bean.official.WxAuthor;
+import com.rinkaze.wanandroid.bean.official.WxAuthor;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseFragment;
 import com.rinkaze.wanandroid.presenter.officialpresenter.OfficialPresenter;
@@ -22,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
