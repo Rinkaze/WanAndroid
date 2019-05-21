@@ -3,6 +3,8 @@ package com.rinkaze.wanandroid.wanandroid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.rinkaze.wanandroid.R;
+
 public class Main2Activity extends AppCompatActivity {
 
     @Override
