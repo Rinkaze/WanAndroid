@@ -8,7 +8,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 public class BaseApp extends Application {
-    private static BaseApp sBaseApp;
+    public static BaseApp sBaseApp;
     public static int mWidthPixels;
     public static int mHeightPixels;
 
