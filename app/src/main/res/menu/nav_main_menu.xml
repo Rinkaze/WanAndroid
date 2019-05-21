@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_collect"
+            android:checkable="true"
+            android:icon="@drawable/collect"
+            android:title="@string/collect" />
+        <item
+            android:id="@+id/nav_todo"
+            android:checkable="true"
+            android:icon="@drawable/todo"
+            android:title="@string/todo" />
+        <item
+            android:id="@+id/nav_night"
+            android:checkable="true"
+            android:icon="@drawable/night"
+            android:title="@string/night_mode" />
+        <item
+            android:id="@+id/nav_setting"
+            android:checkable="true"
+            android:icon="@drawable/setting"
+            android:title="@string/setting" />
+        <item
+            android:id="@+id/nav_about"
+            android:checkable="true"
+            android:icon="@drawable/about_us"
+            android:title="@string/about_us" />
+        <item
+            android:id="@+id/nav_logout"
+            android:checkable="true"
+            android:icon="@drawable/logout"
+            android:title="@string/logout" />
+    </group>
+</menu>

@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:context="com.rinkaze.wanandroid.ui.official.fragment.OfficialFragment">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/official_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        ></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/official_vp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/official_tab"
+
+        >
+
+    </android.support.v4.view.ViewPager>
+
+
+</RelativeLayout>
