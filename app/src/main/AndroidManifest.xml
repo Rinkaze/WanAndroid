@@ -21,6 +21,10 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".ui.official.activity.WebViewActivity"
+            ></activity>
+        <activity android:name=".ui.main.activity.LoginActivity"></activity>
+        
 
         <activity android:name=".ui.project.activity.ProSubActivity"></activity>
     </application>
