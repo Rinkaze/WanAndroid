@@ -107,7 +107,6 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
             public ITabView.TabTitle getTitle(int position) {
                 return new QTabView.TabTitle.Builder()
                         .setContent(data.get(position).getName())
-                        .setTextColor(Color.BLUE, Color.BLACK)
                         .build();
             }
 
@@ -121,5 +120,11 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
     @Override
     public void initFani(String msg) {
 
+    }
+
+    public void scrollTop() {
+        if (recyc != null){
+            recyc.smoothScrollToPosition(0);
+        }
     }
 }

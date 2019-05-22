@@ -31,12 +31,16 @@ public class HomePresenter extends BasePresenter<HomeView>{
         homeModel.getBanner(new ResultCallBack<HomeBanner>() {
             @Override
             public void onSuccess(HomeBanner bean) {
-                mMvpView.onSuccess2(bean);
+                if (mMvpView != null){
+                    mMvpView.onSuccess2(bean);
+                }
             }
 
             @Override
             public void onFail(String msg) {
-                mMvpView.onFail2(msg);
+                if (mMvpView != null){
+                    mMvpView.onFail2(msg);
+                }
             }
         });
     }

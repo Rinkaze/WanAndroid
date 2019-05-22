@@ -54,7 +54,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        if (viewHolder instanceof MyBanner){
+        if (getItemViewType(i) == 1){
             final MyBanner myBanner= (MyBanner) viewHolder;
             myBanner.banner.setImages(listBann);
             /*mBannerTitleList = new ArrayList<>();
@@ -83,7 +83,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else {
             MyView myView= (MyView) viewHolder;
             int newPosition=i;
-            if (listBann.size()>0){
+            if (listBann != null && listBann.size()>0){
                 newPosition=i-1;
             }
             HomeBean.DataBean.DatasBean datasBean = listitem.get(newPosition);
@@ -97,7 +97,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (listBann.size()>0){
+        if (listBann != null && listBann.size()>0){
             return listitem.size()+1;
         }
         return listitem.size();
@@ -105,7 +105,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (position==0){
+        if (position==0 && listBann != null && listBann.size()>0){
             return 1;
         }else {
             return 2;
