@@ -30,8 +30,6 @@ public class MainFragment extends BaseFragment<HomeView, HomePresenter> implemen
     RecyclerView mRecycler;
     @BindView(R.id.srl)
     SmartRefreshLayout mSrl;
-    private View view;
-    private Unbinder unbinder;
     private int num;
     private List<HomeBean.DataBean.DatasBean> listitem;
     private List<HomeBanner.DataBean> listBann;
@@ -106,5 +104,11 @@ public class MainFragment extends BaseFragment<HomeView, HomePresenter> implemen
     @Override
     public void onFail2(String msg2) {
         Log.e("zak", "onFail1: 条目数据"+msg2 );
+    }
+
+    public void scrollTop() {
+        if (mRecycler != null){
+            mRecycler.smoothScrollToPosition(0);
+        }
     }
 }

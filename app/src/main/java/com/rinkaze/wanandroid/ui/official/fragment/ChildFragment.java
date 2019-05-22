@@ -52,11 +52,6 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
     private OfficialChildAdapter adapter;
     private int id;
 
-    public ChildFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     protected ChildPresenter initPresenter() {
         return new ChildPresenter();
@@ -103,7 +98,6 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
         mOfficialSmart.finishLoadMore();
     }
 
-
     @Override
     public void getSuccess(FeedArticleListData feedArticleListData) {
 
@@ -116,7 +110,6 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
 
 
     }
-
 
     @Override
     protected void initListener() {
@@ -153,18 +146,9 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
         Logger.logD(TAG, msg);
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder1 = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder1.unbind();
+    public void scrollTop() {
+        if (mChildRlv != null) {
+            mChildRlv.smoothScrollToPosition(0);
+        }
     }
 }

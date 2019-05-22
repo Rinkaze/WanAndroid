@@ -27,6 +27,11 @@
         <activity android:name=".ui.official.activity.WebViewActivity" />
         <activity android:name=".ui.main.activity.LoginActivity" />
         <activity android:name=".ui.project.activity.ProSubActivity" />
+
+        <activity android:name=".ui.official.activity.WebViewActivity"/>
+        <activity android:name=".ui.main.activity.LoginActivity"/>
+        <activity android:name=".ui.knowledge.activity.KnowledgeWebActivity"/>
+        <activity android:name=".ui.project.activity.ProSubActivity"/>
     </application>
 
 </manifest>
