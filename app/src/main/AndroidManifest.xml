@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".ui.knowledge.activity.KnowledgeActivity" />
 
-        <activity android:name=".ui.official.activity.WebViewActivity"/>
+        <activity android:name=".ui.official.activity.WebViewActivity"
+            />
         <activity android:name=".ui.main.activity.LoginActivity"></activity>
 
         <activity android:name=".ui.project.activity.ProSubActivity"></activity>
