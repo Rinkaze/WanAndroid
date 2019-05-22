@@ -1,7 +1,6 @@
 package com.rinkaze.wanandroid.view.officialview;
 
-import com.rinkaze.wanandroid.Bean.official.FeedArticleListData;
-import com.rinkaze.wanandroid.Bean.official.WxAuthor;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.base.BaseMvpView;
 
 public interface ChildView extends BaseMvpView {

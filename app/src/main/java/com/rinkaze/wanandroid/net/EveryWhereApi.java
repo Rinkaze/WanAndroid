@@ -1,6 +1,6 @@
 package com.rinkaze.wanandroid.net;
 
-import com.rinkaze.wanandroid.Bean.official.FeedArticleListData;
+
 import com.rinkaze.wanandroid.bean.HomeBanner;
 import com.rinkaze.wanandroid.bean.HomeBean;
 

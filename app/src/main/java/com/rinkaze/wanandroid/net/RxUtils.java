@@ -8,7 +8,7 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class RxUtils {
+  public  class RxUtils {
 
     /**
      * 同一线程处理

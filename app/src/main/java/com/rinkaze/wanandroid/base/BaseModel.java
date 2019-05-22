@@ -9,7 +9,7 @@ import io.reactivex.disposables.Disposable;
  *
  */
 
-public class BaseModel {
+  public class BaseModel {
     private CompositeDisposable mCompositeDisposable;
 
 

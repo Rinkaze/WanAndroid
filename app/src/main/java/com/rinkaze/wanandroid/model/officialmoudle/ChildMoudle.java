@@ -1,6 +1,6 @@
 package com.rinkaze.wanandroid.model.officialmoudle;
 
-import com.rinkaze.wanandroid.Bean.official.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.base.BaseModel;
 import com.rinkaze.wanandroid.net.BaseObserver;
 import com.rinkaze.wanandroid.net.HttpUtils;

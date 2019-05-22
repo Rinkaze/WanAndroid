@@ -9,10 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.rinkaze.wanandroid.Bean.official.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.R;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class OfficialChildAdapter extends RecyclerView.Adapter<OfficialChildAdapter.ViewHolder> {

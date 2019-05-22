@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rinkaze.wanandroid.Bean.official.FeedArticleListData;
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseFragment;
 import com.rinkaze.wanandroid.presenter.officialpresenter.ChildPresenter;

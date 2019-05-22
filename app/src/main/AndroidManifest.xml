@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rinkaze.wanandroid">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:name=".base.BaseApp"
         android:allowBackup="true"
@@ -20,11 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".ui.official.activity.WebViewActivity"
-            ></activity>
+        <activity android:name=".ui.knowledge.activity.KnowledgeActivity" />
+
+        <activity android:name=".ui.official.activity.WebViewActivity"/>
         <activity android:name=".ui.main.activity.LoginActivity"></activity>
-        
 
         <activity android:name=".ui.project.activity.ProSubActivity"></activity>
     </application>

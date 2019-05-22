@@ -1,5 +1,6 @@
 package com.rinkaze.wanandroid.presenter;
 
+
 import com.rinkaze.wanandroid.base.BasePresenter;
 import com.rinkaze.wanandroid.view.EmptyView;
 

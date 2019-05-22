@@ -7,12 +7,14 @@
         android:id="@+id/project_img"
         android:layout_width="@dimen/dp_72"
         android:layout_height="@dimen/dp_145"
+        android:scaleType="centerCrop"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@mipmap/zhanweitu_home_kapian_hdpi" />
 
     <TextView
         android:id="@+id/project_name"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_115"
