@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,7 +28,7 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
     @BindView(R.id.container)
     RelativeLayout mContainer;
     @BindView(R.id.web_back)
-    ImageView webBack;
+    ImageView mWebBack;
     @BindView(R.id.web_title)
     TextView webTitle;
     @BindView(R.id.web_toolbar)
@@ -53,6 +54,7 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
         url = getIntent().getStringExtra("url");
         final String name = getIntent().getStringExtra("name");
         ChromeClientCallbackManager.ReceivedTitleCallback mCallback = null;
+
         agentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mContainer, new RelativeLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
@@ -82,13 +84,25 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
     }
 
     @Override
+    protected void initListener() {
+        super.initListener();
+        mWebBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 1:
                 Intent intent1 = new Intent(Intent.ACTION_SEND);
-                intent1.setType("*/*");
-                intent1.putExtra(Intent.EXTRA_STREAM, url);
-                startActivity(Intent.createChooser(intent1, "Share to..."));
+                intent1.setType("text/plain");
+                intent1.putExtra(Intent.EXTRA_TEXT, url);
+                startActivity(Intent.createChooser(intent1, url));
                 break;
             case 2:
 

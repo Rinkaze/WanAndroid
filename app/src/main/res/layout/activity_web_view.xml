@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:id="@+id/web_toolbar"
+        android:theme="@style/AppTheme.ActionBar"
         >
         <RelativeLayout
             android:layout_width="match_parent"
