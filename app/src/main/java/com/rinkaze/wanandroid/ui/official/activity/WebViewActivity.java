@@ -1,5 +1,8 @@
 package com.rinkaze.wanandroid.ui.official.activity;
 
+
+
+
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.Toolbar;
@@ -14,10 +17,7 @@ import com.just.library.ChromeClientCallbackManager;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
 import com.rinkaze.wanandroid.presenter.officialpresenter.WebPresenter;
-import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.view.officialview.WebView;
-
-import java.net.URI;
 
 import butterknife.BindView;
 
@@ -49,10 +49,10 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
     @Override
     protected void initData() {
         super.initData();
-
         url = getIntent().getStringExtra("url");
         final String name = getIntent().getStringExtra("name");
-        ChromeClientCallbackManager.ReceivedTitleCallback mCallback = null;
+        ChromeClientCallbackManager.ReceivedTitleCallback mCallback;
+        mCallback = null;
         agentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mContainer, new RelativeLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
