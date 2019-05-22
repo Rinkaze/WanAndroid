@@ -1,5 +1,6 @@
 package com.rinkaze.wanandroid.ui.main.fragment;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.rinkaze.wanandroid.bean.HomeBanner;
 import com.rinkaze.wanandroid.bean.HomeBean;
 import com.rinkaze.wanandroid.presenter.HomePresenter;
 import com.rinkaze.wanandroid.ui.main.Adapter.HomeAdapter;
+import com.rinkaze.wanandroid.ui.main.activity.HomUrlActivity;
 import com.rinkaze.wanandroid.view.HomeView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -74,18 +76,21 @@ public class MainFragment extends BaseFragment<HomeView, HomePresenter> implemen
 
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
-
-    @Override
     public void onSuccess1(HomeBean bean) {
         listitem = bean.getData().getDatas();
         HomeAdapter homeAdapter = new HomeAdapter(listitem, listBann, getContext());
         mRecycler.setAdapter(homeAdapter);
         mSrl.finishRefresh();
         mSrl.finishLoadMore();
+        homeAdapter.setOnItemUrl(new HomeAdapter.OnItemUrl() {
+            @Override
+            public void onClick(int position) {
+                Intent intent = new Intent(getActivity(), HomUrlActivity.class);
+                intent.putExtra("link",listitem.get(position).getLink());
+                intent.putExtra("title",listitem.get(position).getTitle());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

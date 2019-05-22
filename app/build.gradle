@@ -49,6 +49,7 @@ android {
             keyPassword "123456"
         }
     }
+
 }
 
 def releaseTime() {
