@@ -2,6 +2,7 @@ package com.rinkaze.wanandroid.ui.navigation.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.just.library.AgentWeb;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseFragment;
 import com.rinkaze.wanandroid.presenter.NaviPresenter;
+import com.rinkaze.wanandroid.ui.navigation.activity.AgentWebActivity;
 import com.rinkaze.wanandroid.ui.navigation.adapter.NaviRecAdapter;
 import com.rinkaze.wanandroid.ui.navigation.bean.Navi_Tab_Bean;
 import com.rinkaze.wanandroid.view.NaviView;
@@ -83,24 +85,20 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
         recyc.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-               // tablayout.setTabSelected(mManager.findFirstVisibleItemPosition());
+             tablayout.setTabSelected(mManager.findFirstVisibleItemPosition());
 //                tablayout.setVerticalScrollbarPosition(mManager.findFirstVisibleItemPosition());
             }
         });
         adapter.setListener(new NaviRecAdapter.OnItenClickListener() {
             @Override
-            public void listener(String link) {
-                agentWeb = AgentWeb.with(getActivity())
-                        .setAgentWebParent((LinearLayout) view, new LinearLayout.LayoutParams(-1, -1))
-                        .useDefaultIndicator()
-                        .defaultProgressBarColor()
-                        .createAgentWeb()
-                        .ready()
-                        .go(link);
+            public void listener(String link,String title) {
+                Intent intent = new Intent(getContext(), AgentWebActivity.class);
+                intent.putExtra("title",title);
+                intent.putExtra("link",link);
+                startActivity(intent);
             }
         });
     }
-
     @Override
     protected void initData() {
         mPresenter.initNavigation();

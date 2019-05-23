@@ -60,14 +60,17 @@ public class NaviRecAdapter extends RecyclerView.Adapter<NaviRecAdapter.ViewHold
             TextView tv = view.findViewById(R.id.textview);
             tv.setText(list.get(position).getArticles().get(i).getTitle());
             tv.setTextColor(colorlist.get(i%colorlist.size()));
+            final int finalI = i;
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null){
+                        listener.listener(list.get(position).getArticles().get(finalI).getLink(),list.get(position).getArticles().get(finalI).getTitle());
+                    }
+                }
+            });
             holder.flow.addView(view);
         }
-        holder.title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.listener(list.get(position).getArticles().get(position).getLink());
-            }
-        });
 
     }
 
@@ -89,6 +92,6 @@ public class NaviRecAdapter extends RecyclerView.Adapter<NaviRecAdapter.ViewHold
     }
 
     public interface OnItenClickListener{
-        void listener(String link);
+        void listener(String link,String title);
     }
 }
