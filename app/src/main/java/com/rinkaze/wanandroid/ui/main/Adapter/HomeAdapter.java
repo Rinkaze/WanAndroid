@@ -27,6 +27,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<String> mBannerTitleList;
     private List<String> mBannerUrlList;
     Context context;
+    private int num;
 
     public HomeAdapter(List<HomeBean.DataBean.DatasBean> listitem, List<HomeBanner.DataBean> listBann, Context context) {
         this.listitem = listitem;
@@ -57,34 +58,27 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (getItemViewType(i) == 1){
             final MyBanner myBanner= (MyBanner) viewHolder;
             myBanner.banner.setImages(listBann);
-            /*mBannerTitleList = new ArrayList<>();
-            List<String> bannerImageList = new ArrayList<>();
-            mBannerUrlList = new ArrayList<>();
-            for (HomeBanner.DataBean bannerData : listBann) {
-                mBannerTitleList.add(bannerData.getTitle());
-                bannerImageList.add(bannerData.getImagePath());
-                mBannerUrlList.add(bannerData.getUrl());
+            mBannerTitleList = new ArrayList<>();
+            for (HomeBanner.DataBean dataBean : listBann) {
+                mBannerTitleList.add(dataBean.getTitle());
             }
-            myBanner.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE);
-            myBanner.banner.setImages(bannerImageList);
-            //设置banner动画效果
-            myBanner.banner.setBannerAnimation(Transformer.DepthPage);
-            //设置标题集合（当banner样式有显示title时）
-            myBanner.banner.setBannerTitles(mBannerTitleList);*/
+
             myBanner.banner.setImageLoader(new ImageLoader() {
                 @Override
                 public void displayImage(Context context, Object path, ImageView imageView) {
                     HomeBanner.DataBean dataBean= (HomeBanner.DataBean) path;
                     Glide.with(context).load(dataBean.getImagePath()).into(imageView);
                 }
-            });
-
+            }).setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+            myBanner.banner.setBannerTitles(mBannerTitleList);
+            myBanner.banner.setDelayTime(3000);
             myBanner.banner.start();
         }else {
             MyView myView= (MyView) viewHolder;
             int newPosition=i;
             if (listBann != null && listBann.size()>0){
                 newPosition=i-1;
+                num=newPosition;
             }
             HomeBean.DataBean.DatasBean datasBean = listitem.get(newPosition);
             myView.name.setText(datasBean.getAuthor());
@@ -92,6 +86,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             myView.data.setText(datasBean.getNiceDate());
             myView.superCh.setText(datasBean.getChapterName());
             myView.title.setText(datasBean.getTitle());
+
+            myView.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemUrl.onClick(num);
+                }
+            });
         }
     }
 
@@ -137,5 +138,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             banner = itemView.findViewById(R.id.banner);
         }
+    }
+
+    private OnItemUrl onItemUrl;
+
+    public void setOnItemUrl(OnItemUrl onItemUrl) {
+        this.onItemUrl = onItemUrl;
+    }
+
+    public interface OnItemUrl{
+        void onClick(int position);
     }
 }
