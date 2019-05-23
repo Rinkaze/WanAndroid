@@ -1,6 +1,5 @@
 package com.rinkaze.wanandroid.net;
 
-import com.rinkaze.wanandroid.Bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.bean.ProjectClassBean;
 import com.rinkaze.wanandroid.bean.ProjectListBean;
 
@@ -17,6 +16,8 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface IListService {
+    //项目   project
+    //tablayout栏
     public static final int SUCCESS_CODE = 0;
     //    https://www.wanandroid.com/project/tree/json
     String BASE_URL = "https://www.wanandroid.com/";
@@ -32,9 +33,14 @@ public interface IListService {
      * @param cid second page id
      * @return 项目类别数据
      */
+    //列表数据
     public static String DataUrl="https://www.wanandroid.com/";
     @GET("project/list/{page}/json?")
     Observable<ProjectListBean> getProjectListData(@Path("page") int page,@Query("cid") int cid);
+    //收藏
+    @POST("lg/collect/{id}/json")
+    Observable<String> getCollect(@Path("id") int id);
 
-
+    @POST("lg/uncollect_originId/{disid}/json")
+    Observable<String> getDisCollect(@Path("disid") int disid);
 }

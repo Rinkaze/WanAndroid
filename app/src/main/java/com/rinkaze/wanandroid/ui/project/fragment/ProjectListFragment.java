@@ -1,8 +1,5 @@
 package com.rinkaze.wanandroid.ui.project.fragment;
 
-
-
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +11,15 @@ import android.view.View;
 
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseFragment;
+import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.ProjectListBean;
 import com.rinkaze.wanandroid.presenter.ProjectClassPresenter;
+import com.rinkaze.wanandroid.ui.main.Adapter.HomeAdapter;
+import com.rinkaze.wanandroid.ui.main.activity.LoginActivity;
 import com.rinkaze.wanandroid.ui.project.activity.ProSubActivity;
 import com.rinkaze.wanandroid.ui.project.adapter.RlvProjectClassifyAdapter;
+import com.rinkaze.wanandroid.utils.SpUtil;
+import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.view.ProjectClassifyView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -27,7 +29,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,8 +65,18 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
     }
 
     @Override
+    public void onCollectSucceed(String bean) {
+        ToastUtil.showShort(bean);
+    }
+
+    @Override
+    public void onCollectFalse(String msg2) {
+        ToastUtil.showShort(msg2);
+    }
+
+    @Override
     protected void initData() {
-        mPresenter.getData(page,cid);
+        mPresenter.getData(page, cid);
     }
 
     @Override
@@ -73,9 +84,12 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRlv.setLayoutManager(manager);
         mList = new ArrayList<>();
-        mAdapter = new RlvProjectClassifyAdapter(getActivity(),mList);
+        mAdapter = new RlvProjectClassifyAdapter(getActivity(), mList);
         mRlv.setAdapter(mAdapter);
 
+    }
+    @Override
+    protected void initListener() {
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -95,19 +109,37 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
                 refreshLayout.finishLoadMore();
             }
         });
-    }
-
-    @Override
-    protected void initListener() {
         mAdapter.setOnItemClickListener(new RlvProjectClassifyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                Intent intent = new Intent(getActivity(),ProSubActivity.class);
+                Intent intent = new Intent(getActivity(), ProSubActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("link",mList.get(position).getLink());
-                bundle.putString("name",mList.get(position).getTitle());
+                bundle.putString("link", mList.get(position).getLink());
+                bundle.putString("name", mList.get(position).getTitle());
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
+            }
+        });
+
+        mAdapter.setOnItemUrl(new RlvProjectClassifyAdapter.OnItemUrl() {
+            @Override
+            public void setLike(int position) {
+                if ((boolean) SpUtil.getParam(Constants.LOGIN, false)) {
+                    mPresenter.Like(mList.get(position).getId());
+                } else {
+                    ToastUtil.showShort("请先登录");
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+            }
+
+            @Override
+            public void setDislike(int id) {
+                if ((boolean) SpUtil.getParam(Constants.LOGIN, false)) {
+                    mPresenter.Dislike(mList.get(id).getId());
+                } else {
+                    ToastUtil.showShort("请先登录");
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
             }
         });
     }
