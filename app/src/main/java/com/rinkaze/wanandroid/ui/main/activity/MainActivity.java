@@ -25,6 +25,9 @@ import android.widget.TextView;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
 import com.rinkaze.wanandroid.base.Constants;
+import com.rinkaze.wanandroid.bean.LoginInfo;
+import com.rinkaze.wanandroid.model.LoginModel;
+import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.presenter.EmptyPresenter;
 import com.rinkaze.wanandroid.ui.knowledge.fragment.KnowledgeFm;
@@ -33,6 +36,7 @@ import com.rinkaze.wanandroid.ui.navigation.fragment.NaviFragment;
 import com.rinkaze.wanandroid.ui.official.fragment.OfficialFragment;
 import com.rinkaze.wanandroid.ui.project.fragment.ProjectFragment;
 import com.rinkaze.wanandroid.utils.SpUtil;
+import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.utils.UIModeUtil;
 import com.rinkaze.wanandroid.view.EmptyView;
 
@@ -227,6 +231,25 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                         break;
                     case R.id.nav_logout:
                         //退出登录
+                        if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
+                            showLoading();
+                            new LoginModel().logout(new ResultCallBack<LoginInfo>() {
+                                @Override
+                                public void onSuccess(LoginInfo bean) {
+                                    SpUtil.setParam(Constants.USERNAME,"登录");
+                                    SpUtil.setParam(Constants.TOKEN,0);
+                                    SpUtil.setParam(Constants.LOGIN,false);
+                                    tvLogin.setText(R.string.login);
+                                    ToastUtil.showShort("已退出登录");
+                                    hideLoading();
+                                }
+
+                                @Override
+                                public void onFail(String msg) {
+                                    ToastUtil.showShort(msg);
+                                }
+                            });
+                        }
                         break;
                 }
                 return false;
