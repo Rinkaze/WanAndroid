@@ -1,20 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".ui.project.fragment.ProjectFragment">
+
     <android.support.design.widget.TabLayout
+        android:id="@+id/project_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable"
         android:background="@color/colorPrimary"
-        android:id="@+id/project_tab"/>
+        app:tabMode="scrollable" />
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/project_vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/project_vp"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

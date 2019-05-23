@@ -71,4 +71,10 @@ public class KnowledgeFm extends BaseFragment<KnowledgeView, KnowledgeP> impleme
     public void ErrorData(String e) {
         Logger.logD("KnowledgeFm",e);
     }
+
+    public void scrollTop() {
+        if (mKnowledgeReview != null){
+            mKnowledgeReview.smoothScrollToPosition(0);
+        }
+    }
 }

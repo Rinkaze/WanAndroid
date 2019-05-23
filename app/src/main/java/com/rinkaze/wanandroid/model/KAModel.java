@@ -8,6 +8,9 @@ import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.RxUtils;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.reactivex.disposables.Disposable;
 
 public class KAModel extends BaseModel {
@@ -30,6 +33,38 @@ public class KAModel extends BaseModel {
                     @Override
                     protected void subscribe(Disposable d) {
                            addDisposable(d);
+                    }
+                });
+    }
+    public void initDeleteKAData(int id,final ResultCallBack<String> callBack){
+        WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
+        apiserver.getKADelete(id)
+                .compose(RxUtils.<String>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(s);
+                            int code = jsonObject.getInt("errorCode");
+                            if (code==WanAndroidApi.SUCCESS_CODE){
+                               callBack.onSuccess("已取消");
+                            }else {
+                                callBack.onSuccess("取消失败");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void error(String msg) {
+                        callBack.onFail(msg);
+                    }
+
+                    @Override
+                    protected void subscribe(Disposable d) {
+                        addDisposable(d);
                     }
                 });
     }

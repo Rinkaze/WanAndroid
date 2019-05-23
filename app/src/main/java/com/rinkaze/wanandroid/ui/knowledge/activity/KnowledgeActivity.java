@@ -55,6 +55,7 @@ public class KnowledgeActivity extends BaseActivity<KnowledgeView, KnowledgeP> i
     private ArrayList<String> mListSt = new ArrayList<>();
     private KAFMAdapter mKafmAdapter;
     private int postion;
+    private String stringExtra;
 
 
     @Override
@@ -93,24 +94,25 @@ public class KnowledgeActivity extends BaseActivity<KnowledgeView, KnowledgeP> i
     protected void initView() {
         mPresenter.onKnowledgePresentrt();
         Intent intent = getIntent();
-        String stringExtra = intent.getStringExtra(Constants.TITLE);
+        stringExtra = intent.getStringExtra(Constants.TITLE);
         postion = intent.getIntExtra(Constants.DESC, 1);
 
         mToolbar.setTitle("");
         mToolTv.setText(stringExtra);
         setSupportActionBar(mToolbar);
 
-       mToolimg.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               finish();
-           }
-       });
+        mToolimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
+
     //选项菜单
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(1,1,1,"分享");
+        menu.add(1, 1, 1, "分享");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -119,7 +121,10 @@ public class KnowledgeActivity extends BaseActivity<KnowledgeView, KnowledgeP> i
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 1:
-
+                Intent intent1 = new Intent(Intent.ACTION_SEND);
+                intent1.setType("text/plain");
+                intent1.putExtra(Intent.EXTRA_TEXT, stringExtra);
+                startActivity(intent1);
                 break;
         }
         return true;

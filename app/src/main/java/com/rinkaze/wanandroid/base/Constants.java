@@ -12,6 +12,9 @@ public interface Constants {
     //是否为debug状态,正式上线版本需要改为false
     boolean isDebug = true;
 
+    //夜间模式
+    String MODE = "mode";
+
     String TITLE = "title";
 
     String PATH_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath() +
@@ -25,9 +28,7 @@ public interface Constants {
 
     String PATH_CACHE = PATH_DATA + "/NetCache";
     String DATA = "data";
-
     String LOGIN = "login";
-
     String TOKEN = "token";
     String DESC = "desc";
     String USERNAME = "username";

@@ -1,5 +1,6 @@
 package com.rinkaze.wanandroid.net;
 
+import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.bean.ProjectClassBean;
 import com.rinkaze.wanandroid.bean.ProjectListBean;
 

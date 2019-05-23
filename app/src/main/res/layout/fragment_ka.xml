@@ -4,8 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/smartrefreshlayout">
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        srlClassicsSpinnerStyle="FixedBehind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 <android.support.v7.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/review"/>
+    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+        srlClassicsSpinnerStyle="FixedBehind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

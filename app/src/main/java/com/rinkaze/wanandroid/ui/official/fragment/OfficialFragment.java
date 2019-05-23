@@ -33,17 +33,10 @@ public class OfficialFragment extends BaseFragment<OfficialView, OfficialPresent
     TabLayout mOfficialTab;
     @BindView(R.id.official_vp)
     ViewPager mOfficialVp;
-    Unbinder unbinder;
 
     private ArrayList<Fragment> list;
     private ArrayList<String> title;
     private OfficialViewPagerAdapter adapter;
-
-
-    public OfficialFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     protected OfficialPresenter initPresenter() {
@@ -96,5 +89,12 @@ public class OfficialFragment extends BaseFragment<OfficialView, OfficialPresent
     @Override
     public void getFailed(String msg) {
         Logger.logD(TAG,msg);
+    }
+
+    public void scrollTop() {
+        if (list != null && mOfficialVp != null){
+            ChildFragment childFragment = (ChildFragment) list.get(mOfficialVp.getCurrentItem());
+            childFragment.scrollTop();
+        }
     }
 }

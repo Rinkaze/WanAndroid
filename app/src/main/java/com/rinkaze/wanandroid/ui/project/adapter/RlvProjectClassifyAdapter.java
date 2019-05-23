@@ -87,6 +87,15 @@ public class RlvProjectClassifyAdapter extends RecyclerView.Adapter {
                 }
             }
         });
+
+        viewHolders.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                  mListener.onItemClick(datasBean.getLink(),datasBean.getTitle(),datasBean.getAuthor(),i);
+                }
+            }
+        });
     }
 
     @Override
@@ -117,7 +126,8 @@ public class RlvProjectClassifyAdapter extends RecyclerView.Adapter {
     //接口回调
     //1.写个接口
     public interface OnItemClickListener {
-        void onItemClick(View v, int position);
+        void onItemClick(String link,String title,String author, int position);
+
     }
     //2.写个方法,将OnItemClickListener设置到Adapter中
     public void setOnItemClickListener(OnItemClickListener listener) {

@@ -2,6 +2,11 @@ package com.rinkaze.wanandroid.bean;
 
 public class CollectBean {
 
+    /**
+     * errorCode : -1001
+     * errorMsg : 请先登录！
+     */
+
     private int errorCode;
     private String errorMsg;
 
