@@ -56,11 +56,6 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
     private String link;
     private String author;
 
-    public ChildFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     protected ChildPresenter initPresenter() {
         return new ChildPresenter();
@@ -112,7 +107,6 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
         mChildRlv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter.setList(list);
     }
-
 
     @Override
     protected void initListener() {
@@ -176,6 +170,10 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
         Logger.logD(TAG, msg);
     }
 
-
+    public void scrollTop() {
+        if (mChildRlv != null) {
+            mChildRlv.smoothScrollToPosition(0);
+        }
+    }
 
     }

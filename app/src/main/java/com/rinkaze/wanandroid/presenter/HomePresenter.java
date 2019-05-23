@@ -7,7 +7,7 @@ import com.rinkaze.wanandroid.model.HomeModel;
 import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.view.HomeView;
 
-public class HomePresenter extends BasePresenter<HomeView>{
+public class HomePresenter extends BasePresenter<HomeView> {
 
     private HomeModel homeModel;
 
@@ -28,15 +28,48 @@ public class HomePresenter extends BasePresenter<HomeView>{
                 mMvpView.onFail1(msg);
             }
         });
+    }
+
+    public void getBannerData(){
         homeModel.getBanner(new ResultCallBack<HomeBanner>() {
             @Override
             public void onSuccess(HomeBanner bean) {
-                mMvpView.onSuccess2(bean);
+                if (mMvpView != null){
+                    mMvpView.onSuccess2(bean);
+                }
             }
 
             @Override
             public void onFail(String msg) {
-                mMvpView.onFail2(msg);
+                if (mMvpView != null){
+                    mMvpView.onFail2(msg);
+                }
+            }
+        });
+    }
+    public void Like(int id){
+        homeModel.getLike(id, new ResultCallBack<String>() {
+            @Override
+            public void onSuccess(String bean) {
+                mMvpView.onCollectSucceed("已收藏");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mMvpView.onCollectFalse(msg);
+            }
+        });
+    }
+    public void Dislike(int disid){
+        homeModel.getDisLike(disid, new ResultCallBack<String>() {
+            @Override
+            public void onSuccess(String bean) {
+                mMvpView.onCollectSucceed("已取消收藏");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mMvpView.onCollectFalse(msg);
             }
         });
     }

@@ -43,8 +43,7 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
     private ArrayList<ProjectListBean.DataBean.DatasBean> mList;
     private RlvProjectClassifyAdapter mAdapter;
 
-    public ProjectListFragment(int id) {
-        this.cid = id;
+    public ProjectListFragment() {
     }
 
     @Override
@@ -61,6 +60,8 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
     public void setData(ProjectListBean bean) {
         mList.addAll(bean.getData().getDatas());
         mAdapter.notifyDataSetChanged();
+        mRefreshLayout.finishLoadMore();
+        mRefreshLayout.finishRefresh();
     }
 
     @Override
@@ -70,6 +71,7 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
 
     @Override
     protected void initView() {
+        cid = getArguments().getInt("cid",294);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRlv.setLayoutManager(manager);
         mList = new ArrayList<>();
@@ -80,9 +82,9 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 mList.clear();
+                page = 1;
                 initData();
                 mAdapter.notifyDataSetChanged();
-                refreshlayout.finishRefresh();
             }
         });
         //加载更多
@@ -92,7 +94,6 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
                 page++;
                 initData();
                 mAdapter.notifyDataSetChanged();
-                refreshLayout.finishLoadMore();
             }
         });
     }
@@ -101,13 +102,21 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
     protected void initListener() {
         mAdapter.setOnItemClickListener(new RlvProjectClassifyAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(String link,String title,String author, int position) {
                 Intent intent = new Intent(getActivity(),ProSubActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("link",mList.get(position).getLink());
+                bundle.putString("link",link);
+                bundle.putString("title",title);
+                bundle.putString("author",author);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
             }
         });
+    }
+
+    public void scrollTop() {
+        if (mRlv != null){
+            mRlv.smoothScrollToPosition(0);
+        }
     }
 }

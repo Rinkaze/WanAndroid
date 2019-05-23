@@ -22,4 +22,8 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="c_686868">#5E5E5E</color>
+    <color name="blue">#00f</color>
+    <color name="c_6cf">#6cf</color>
+    <color name="c_636363">#636363</color>
+    <color name="pink">#f580e4</color>
 </resources>

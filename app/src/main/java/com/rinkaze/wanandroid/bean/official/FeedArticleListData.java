@@ -166,6 +166,7 @@ public class FeedArticleListData {
             private int zan;
             private List<TagsBean> tags;
 
+
             public String getApkLink() {
                 return apkLink;
             }

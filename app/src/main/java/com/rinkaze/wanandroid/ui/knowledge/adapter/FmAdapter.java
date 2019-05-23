@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 
 public class FmAdapter extends FragmentPagerAdapter {
-    private String [] arr;
+    private String[] arr;
     private ArrayList<Fragment> list;
 
     public FmAdapter(FragmentManager fm, String[] arr, ArrayList<Fragment> list) {
