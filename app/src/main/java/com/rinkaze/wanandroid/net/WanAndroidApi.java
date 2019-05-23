@@ -44,6 +44,13 @@ public interface WanAndroidApi {
     @POST("user/register")
     Observable<LoginInfo> register(@Field("username")String username, @Field("password")String psw,@Field("repassword")String rePsw);
 
+    /**
+     * 退出登录接口
+     * @return
+     */
+    @GET("user/logout/json")
+    Observable<LoginInfo> logout();
+
     /* 获取公众号列表
      * http://wanandroid.com/wxarticle/chapters/json
      *
