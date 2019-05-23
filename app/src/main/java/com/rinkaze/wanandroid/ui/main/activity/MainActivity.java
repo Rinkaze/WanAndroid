@@ -275,17 +275,21 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         lastPosition = type;
     }
 
-    public static void toLogin(Activity activity){
-        activity.startActivityForResult(new Intent(activity,LoginActivity.class),100);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
                 if (tvLogin.getText().toString().trim().equals("登录"))
-                toLogin(this);
+                    startActivityForResult(new Intent(this,LoginActivity.class),100);
                 break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
+            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
         }
     }
 
