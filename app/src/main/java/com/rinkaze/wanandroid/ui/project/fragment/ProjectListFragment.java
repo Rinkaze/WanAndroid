@@ -102,11 +102,12 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
     protected void initListener() {
         mAdapter.setOnItemClickListener(new RlvProjectClassifyAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(String link,String title,String author, int position) {
                 Intent intent = new Intent(getActivity(),ProSubActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("link",mList.get(position).getLink());
-                bundle.putString("name",mList.get(position).getTitle());
+                bundle.putString("link",link);
+                bundle.putString("title",title);
+                bundle.putString("author",author);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
             }

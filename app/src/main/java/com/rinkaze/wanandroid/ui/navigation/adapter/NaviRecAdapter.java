@@ -65,7 +65,9 @@ public class NaviRecAdapter extends RecyclerView.Adapter<NaviRecAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     if (listener != null){
-                        listener.listener(list.get(position).getArticles().get(finalI).getLink(),list.get(position).getArticles().get(finalI).getTitle());
+                        listener.listener(list.get(position).getArticles().get(finalI).getLink(),
+                                list.get(position).getArticles().get(finalI).getTitle(),
+                                list.get(position).getArticles().get(finalI).getAuthor());
                     }
                 }
             });
@@ -92,6 +94,6 @@ public class NaviRecAdapter extends RecyclerView.Adapter<NaviRecAdapter.ViewHold
     }
 
     public interface OnItenClickListener{
-        void listener(String link,String title);
+        void listener(String link,String title,String author);
     }
 }

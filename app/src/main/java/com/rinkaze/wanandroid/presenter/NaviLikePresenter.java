@@ -14,8 +14,8 @@ public class NaviLikePresenter extends BasePresenter<NaviLikeView> {
             this.model=new NaviLikeModel();
             mModels.add(model);
     }
-    public void initNaviLike(String name,String like){
-        model.initNaviLike(name, like, new ResultCallBack<String>() {
+    public void initNaviLike(String name,String author,String like){
+        model.initNaviLike(name, like, author,new ResultCallBack<String>() {
             @Override
             public void onSuccess(String bean) {
                 mMvpView.onSuccess(bean);

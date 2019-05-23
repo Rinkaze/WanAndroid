@@ -1,5 +1,7 @@
 package com.rinkaze.wanandroid.model;
 
+import android.util.Log;
+
 import com.google.gson.JsonObject;
 import com.rinkaze.wanandroid.base.BaseModel;
 import com.rinkaze.wanandroid.net.BaseObserver;
@@ -16,15 +18,16 @@ import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 
 public class NaviLikeModel extends BaseModel {
-    public void initNaviLike(String name, String link, final ResultCallBack<String> resultCallBack){
+    private static final String TAG = "NaviLikeModel";
+    public void initNaviLike(String name,String author, String link, final ResultCallBack<String> resultCallBack){
         WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
-        Observable<String> naviLike = apiserver.getNaviLike(name, link);
-        naviLike.compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+        Observable<JsonObject> naviLike = apiserver.getNaviLike(name,author,link);
+        naviLike.compose(RxUtils.<JsonObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JsonObject>() {
                     @Override
-                    public void onNext(String s) {
+                    public void onNext(JsonObject s) {
                         try {
-                            JSONObject jsonObject = new JSONObject(s);
+                            JSONObject jsonObject = new JSONObject(s.toString());
                             int errorCode = jsonObject.getInt("errorCode");
                             if (errorCode==WanAndroidApi.SUCCESS_CODE){
                                 resultCallBack.onSuccess("收藏成功");
@@ -35,12 +38,10 @@ public class NaviLikeModel extends BaseModel {
                             e.printStackTrace();
                         }
                     }
-
                     @Override
                     public void error(String msg) {
-
+                        Log.e(TAG, "error: e="+msg );
                     }
-
                     @Override
                     protected void subscribe(Disposable d) {
                         addDisposable(d);

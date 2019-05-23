@@ -75,7 +75,7 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
             @Override
             public void onTabReselected(TabView tab, int position) {
             }
-        });
+
      //配置Recyclerview
         final LinearLayoutManager mManager = new LinearLayoutManager(getContext());
         recyc.setLayoutManager(mManager);
@@ -91,8 +91,9 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
         });
         adapter.setListener(new NaviRecAdapter.OnItenClickListener() {
             @Override
-            public void listener(String link,String title) {
+            public void listener(String link,String title,String author) {
                 Intent intent = new Intent(getContext(), AgentWebActivity.class);
+                intent.putExtra("author",author);
                 intent.putExtra("title",title);
                 intent.putExtra("link",link);
                 startActivity(intent);

@@ -24,7 +24,11 @@
             android:layout_height="wrap_content"
             android:text="1234"
             android:textSize="@dimen/dp_20"
-            android:textColor="@color/c_ffffff"/>
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            />
     </android.support.v7.widget.Toolbar>
 <LinearLayout
     android:orientation="vertical"
