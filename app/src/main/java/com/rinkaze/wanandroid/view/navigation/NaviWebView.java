@@ -4,5 +4,4 @@ import com.rinkaze.wanandroid.base.BaseMvpView;
 
 public interface NaviWebView extends BaseMvpView {
 
-    
 }

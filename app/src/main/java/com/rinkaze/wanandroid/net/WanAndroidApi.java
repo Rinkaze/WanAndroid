@@ -6,6 +6,7 @@ import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.bean.official.WxAuthor;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -66,4 +67,9 @@ public interface WanAndroidApi {
 
     @GET("tree/json")
     Observable<KnowledgeHierarchyData> getKnowledgeHierarchyData();
+
+
+    //Navigation_收藏
+    @GET("lg/collect/addtool/json")
+    Observable<String> getNaviLike(@Field("name")String name,@Field("link") String link);
 }
