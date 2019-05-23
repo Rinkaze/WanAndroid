@@ -46,8 +46,6 @@ public class KnowledgeFm extends BaseFragment<KnowledgeView, KnowledgeP> impleme
         mKnowledgeReview.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         mAdapter = new KnowledgeViewAdapter(getContext(), mKnowledgeList);
         mKnowledgeReview.setAdapter(mAdapter);
-
-
     }
 
     @Override
@@ -71,4 +69,5 @@ public class KnowledgeFm extends BaseFragment<KnowledgeView, KnowledgeP> impleme
     public void ErrorData(String e) {
         Logger.logD("KnowledgeFm",e);
     }
+
 }

@@ -63,8 +63,6 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
 
 
 
-
-
      //配置Recyclerview
         recyc.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new NaviRecAdapter(getContext());

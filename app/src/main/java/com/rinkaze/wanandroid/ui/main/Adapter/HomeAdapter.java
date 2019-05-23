@@ -45,17 +45,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        if (i==1){
-            return new MyBanner(LayoutInflater.from(context).inflate(R.layout.banner_home,null));
-        }else {
-            return new MyView(LayoutInflater.from(context).inflate(R.layout.item_home,null));
+        if (i == 1) {
+            return new MyBanner(LayoutInflater.from(context).inflate(R.layout.banner_home, null));
+        } else {
+            return new MyView(LayoutInflater.from(context).inflate(R.layout.item_home, null));
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        if (viewHolder instanceof MyBanner){
-            final MyBanner myBanner= (MyBanner) viewHolder;
+        if (viewHolder instanceof MyBanner) {
+            final MyBanner myBanner = (MyBanner) viewHolder;
             myBanner.banner.setImages(listBann);
             /*mBannerTitleList = new ArrayList<>();
             List<String> bannerImageList = new ArrayList<>();
@@ -74,21 +74,21 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             myBanner.banner.setImageLoader(new ImageLoader() {
                 @Override
                 public void displayImage(Context context, Object path, ImageView imageView) {
-                    HomeBanner.DataBean dataBean= (HomeBanner.DataBean) path;
+                    HomeBanner.DataBean dataBean = (HomeBanner.DataBean) path;
                     Glide.with(context).load(dataBean.getImagePath()).into(imageView);
                 }
             });
 
             myBanner.banner.start();
-        }else {
-            MyView myView= (MyView) viewHolder;
-            int newPosition=i;
-            if (listBann.size()>0){
-                newPosition=i-1;
+        } else {
+            MyView myView = (MyView) viewHolder;
+            int newPosition = i;
+            if (listBann.size() > 0) {
+                newPosition = i - 1;
             }
             HomeBean.DataBean.DatasBean datasBean = listitem.get(newPosition);
             myView.name.setText(datasBean.getAuthor());
-            myView.chapter.setText(datasBean.getSuperChapterName()+"/");
+            myView.chapter.setText(datasBean.getSuperChapterName() + "/");
             myView.data.setText(datasBean.getNiceDate());
             myView.superCh.setText(datasBean.getChapterName());
             myView.title.setText(datasBean.getTitle());
@@ -97,17 +97,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (listBann.size()>0){
-            return listitem.size()+1;
+        if (listBann.size() > 0) {
+            return listitem.size() + 1;
         }
         return listitem.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position==0){
+        if (position == 0) {
             return 1;
-        }else {
+        } else {
             return 2;
         }
     }
@@ -129,6 +129,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             data = itemView.findViewById(R.id.data);
         }
     }
+
     class MyBanner extends RecyclerView.ViewHolder {
 
         private final Banner banner;

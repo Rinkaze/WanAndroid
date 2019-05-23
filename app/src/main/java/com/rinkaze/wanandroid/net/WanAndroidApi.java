@@ -66,4 +66,23 @@ public interface WanAndroidApi {
 
     @GET("tree/json")
     Observable<KnowledgeHierarchyData> getKnowledgeHierarchyData();
+
+
+    //收藏
+    @FormUrlEncoded
+    @POST("lg/collect/add/json")
+    Observable<String> getNaviLike(@Field("title")String title,@Field("author")String author,@Field("link") String link);
+    /*https://www.wanandroid.com/lg/collect/add/json
+    方法：POST
+    参数：
+    title，author，link*/
+   // https://www.wanandroid.com/lg/collect/deletetool/json
+    /*
+    * 方法：POST
+    * 参数：id*/
+    @FormUrlEncoded
+    @POST("lg/uncollect/{id}/json")
+    Observable<String> getKADelete(@Field("id")int id);
+
+
 }

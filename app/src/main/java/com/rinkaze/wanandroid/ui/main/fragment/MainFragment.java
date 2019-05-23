@@ -29,7 +29,6 @@ public class MainFragment extends BaseFragment<HomeView, HomePresenter> implemen
     @BindView(R.id.srl)
     SmartRefreshLayout mSrl;
     private View view;
-    private Unbinder unbinder;
     private int num;
     private List<HomeBean.DataBean.DatasBean> listitem;
     private List<HomeBanner.DataBean> listBann;
@@ -73,11 +72,6 @@ public class MainFragment extends BaseFragment<HomeView, HomePresenter> implemen
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
 
     @Override
     public void onSuccess1(HomeBean bean) {
