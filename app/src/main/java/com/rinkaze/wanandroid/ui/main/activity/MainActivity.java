@@ -1,5 +1,6 @@
 package com.rinkaze.wanandroid.ui.main.activity;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -274,12 +275,16 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         lastPosition = type;
     }
 
+    public static void toLogin(Activity activity){
+        activity.startActivityForResult(new Intent(activity,LoginActivity.class),100);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
                 if (tvLogin.getText().toString().trim().equals("登录"))
-                startActivityForResult(new Intent(this,LoginActivity.class),100);
+                toLogin(this);
                 break;
         }
     }
