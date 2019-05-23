@@ -33,4 +33,18 @@ public class CollectPresenter extends BasePresenter<CollectView> {
             }
         });
     }
+
+    public void disCollect(int id, int originId) {
+        model.disCollect(id,originId, new ResultCallBack<String>() {
+            @Override
+            public void onSuccess(String bean) {
+                mMvpView.disCollect(bean);
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mMvpView.onFail(msg);
+            }
+        });
+    }
 }

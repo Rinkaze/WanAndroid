@@ -1,5 +1,8 @@
 package com.rinkaze.wanandroid.model;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import com.rinkaze.wanandroid.base.BaseModel;
 import com.rinkaze.wanandroid.bean.MyCollectBean;
 import com.rinkaze.wanandroid.net.BaseObserver;
@@ -8,6 +11,9 @@ import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.RxUtils;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.utils.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import io.reactivex.disposables.Disposable;
 
@@ -40,6 +46,40 @@ public class CollectModel extends BaseModel {
                                 callBack.onSuccess(myCollectBean);
                             }else {
                                 callBack.onFail(myCollectBean.getErrorMsg());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void disCollect(int id, int originId, final ResultCallBack<String> resultCallBack) {
+        HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl,WanAndroidApi.class)
+                .disCollect(id,originId)
+                .compose(RxUtils.<String>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<String>() {
+                    @Override
+                    public void error(String msg) {
+                        Log.e(TAG, "error: e="+msg );
+                    }
+
+                    @Override
+                    protected void subscribe(Disposable d) {
+                        addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        if (!TextUtils.isEmpty(s)){
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                int code = jsonObject.getInt("errorCode");
+                                if (code == WanAndroidApi.SUCCESS_CODE){
+                                    resultCallBack.onSuccess("已取消收藏");
+                                }else {
+                                    resultCallBack.onFail(jsonObject.getString("errorMsg"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
                     }

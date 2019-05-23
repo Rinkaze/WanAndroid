@@ -40,12 +40,20 @@ public class RecCollectAdapter extends RecyclerView.Adapter<RecCollectAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int i) {
         MyCollectBean.DataEntity.DatasEntity entity = list.get(i);
         holder.tvAuthor.setText(entity.getAuthor());
         holder.tvChapter.setText(entity.getChapterName());
         holder.tvDate.setText(entity.getNiceDate());
         holder.tvTitle.setText(entity.getTitle());
+        holder.ivCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onCollectListener != null){
+                    onCollectListener.disCollect(i);
+                }
+            }
+        });
     }
 
     @Override

@@ -1,8 +1,14 @@
 package com.rinkaze.wanandroid.ui.main.activity;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
@@ -23,11 +29,14 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
 
     @BindView(R.id.recView)
     RecyclerView mRecView;
+    @BindView(R.id.toolBar)
+    Toolbar mToolBar;
     @BindView(R.id.srl)
     SmartRefreshLayout mSrl;
     private RecCollectAdapter adapter;
     private int page = 0;
     private ArrayList<MyCollectBean.DataEntity.DatasEntity> list;
+    private int position;
 
     @Override
     protected CollectPresenter initPresenter() {
@@ -51,6 +60,12 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
     }
 
     @Override
+    public void disCollect(String msg) {
+        list.remove(position);
+        adapter.setList(list);
+    }
+
+    @Override
     public void onFail(String msg) {
         ToastUtil.showShort(msg);
         mSrl.finishLoadMore();
@@ -59,10 +74,14 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
 
     @Override
     protected void initView() {
+        mToolBar.setTitle("我的收藏");
+        mToolBar.setTitleTextColor(getResources().getColor(R.color.white));
+        mToolBar.setNavigationIcon(R.mipmap.back_white);
         list = new ArrayList<>();
         mRecView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecCollectAdapter(this);
         mRecView.setAdapter(adapter);
+        mRecView.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
     }
 
     @Override
@@ -83,6 +102,19 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 page = 0;
                 initData();
+            }
+        });
+        adapter.setOnCollectListener(new RecCollectAdapter.OnCollectListener() {
+            @Override
+            public void disCollect(int position) {
+                CollectActivity.this.position = position;
+                mPresenter.disCollect(list.get(position).getId(),list.get(position).getOriginId());
+            }
+        });
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

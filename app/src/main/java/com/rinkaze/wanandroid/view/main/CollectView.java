@@ -9,5 +9,6 @@ import com.rinkaze.wanandroid.bean.MyCollectBean;
 
 public interface CollectView extends BaseMvpView {
     void onSuccess(MyCollectBean.DataEntity collectBean);
+    void disCollect(String msg);
     void onFail(String msg);
 }

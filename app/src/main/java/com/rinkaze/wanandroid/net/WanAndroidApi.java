@@ -84,4 +84,8 @@ public interface WanAndroidApi {
 
     @GET("lg/collect/list/{page}/json")
     Observable<MyCollectBean> getCollectData(@Path("page")int page);
+
+    @FormUrlEncoded
+    @POST("lg/uncollect/{id}/json")
+    Observable<String> disCollect(@Path("id")int id,@Field("originId")int originId);
 }
