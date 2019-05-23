@@ -2,11 +2,14 @@ package com.rinkaze.wanandroid.net;
 import android.util.Log;
 
 
+import com.rinkaze.wanandroid.base.BaseApp;
 import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.utils.SystemUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -27,6 +30,7 @@ public class HttpUtils {
     private HttpUtils(){
         OkHttpClient mOkHttpClient = getOkHttpClient();
         mRetrofitBuilder = getRetrofit(mOkHttpClient);
+
     }
 
     private static volatile HttpUtils instance;
@@ -59,6 +63,7 @@ public class HttpUtils {
         File cacheFile = new File(Constants.PATH_CACHE);
         //设置缓存文件大小
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder().
                 cache(cache)
                 .addInterceptor(new MyCacheinterceptor())
@@ -69,6 +74,8 @@ public class HttpUtils {
                 .connectTimeout(10, TimeUnit.SECONDS)
                 //设置错误重连
                 .retryOnConnectionFailure(true);
+        builder.addInterceptor(new AddCookiesInterceptor(BaseApp.getInstance()));
+        builder.addInterceptor(new SaveCookiesInterceptor(BaseApp.getInstance()));
         if (Constants.isDebug){
             builder.addInterceptor(new LoggingInterceptor());
         }

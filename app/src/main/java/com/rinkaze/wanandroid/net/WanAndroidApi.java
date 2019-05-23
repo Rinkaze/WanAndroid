@@ -2,6 +2,7 @@ package com.rinkaze.wanandroid.net;
 
 import com.rinkaze.wanandroid.bean.KnowledgeHierarchyData;
 import com.rinkaze.wanandroid.bean.LoginInfo;
+import com.rinkaze.wanandroid.bean.MyCollectBean;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.bean.official.WxAuthor;
 
@@ -80,4 +81,7 @@ public interface WanAndroidApi {
     @FormUrlEncoded
     @POST("lg/collect/addtool/json")
     Observable<String> getNaviLike(@Field("name")String name,@Field("link") String link);
+
+    @GET("lg/collect/list/{page}/json")
+    Observable<MyCollectBean> getCollectData(@Path("page")int page);
 }

@@ -216,6 +216,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                 switch (menuItem.getItemId()) {
                     case R.id.nav_collect:
                         //收藏
+                        startActivity(new Intent(MainActivity.this,CollectActivity.class));
                         break;
                     case R.id.nav_todo:
                         //TODO
