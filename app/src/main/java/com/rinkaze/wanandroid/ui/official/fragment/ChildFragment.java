@@ -2,23 +2,25 @@ package com.rinkaze.wanandroid.ui.official.fragment;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseFragment;
+import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.presenter.officialpresenter.ChildPresenter;
+import com.rinkaze.wanandroid.ui.main.activity.LoginActivity;
 import com.rinkaze.wanandroid.ui.official.activity.WebViewActivity;
 import com.rinkaze.wanandroid.ui.official.adapter.OfficialChildAdapter;
 import com.rinkaze.wanandroid.utils.Logger;
+import com.rinkaze.wanandroid.utils.SpUtil;
 import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.view.officialview.ChildView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -51,6 +53,8 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
     private ArrayList<FeedArticleListData.DataBean.DatasBean> list;
     private OfficialChildAdapter adapter;
     private int id;
+    private String link;
+    private String author;
 
     public ChildFragment() {
         // Required empty public constructor
@@ -73,10 +77,8 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
         list = new ArrayList<>();
         adapter = new OfficialChildAdapter(getActivity());
         id = getArguments().getInt("id");
-
         Log.e(TAG, "initView: " + id);
     }
-
     @Override
     protected void initData() {
         super.initData();
@@ -88,7 +90,6 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
                 refreshLayout.finishRefresh();
             }
         });
-
         mOfficialSmart.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -103,18 +104,13 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
         mOfficialSmart.finishLoadMore();
     }
 
-
     @Override
     public void getSuccess(FeedArticleListData feedArticleListData) {
-
         List<FeedArticleListData.DataBean.DatasBean> datas = feedArticleListData.getData().getDatas();
         list.addAll(datas);
-
         mChildRlv.setAdapter(adapter);
         mChildRlv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter.setList(list);
-
-
     }
 
 
@@ -122,14 +118,19 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
     protected void initListener() {
         super.initListener();
         adapter.setClick(new OfficialChildAdapter.setOnClick() {
+
+            private String title;
+
             @Override
             public void setClick(View v, int position) {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 FeedArticleListData.DataBean.DatasBean datasBean = list.get(position);
-                String link = datasBean.getLink();
-                String author = datasBean.getAuthor();
+                link = datasBean.getLink();
+                author = datasBean.getAuthor();
+                title = datasBean.getTitle();
                 intent.putExtra("url", link);
                 intent.putExtra("name", author);
+                intent.putExtra("title", title);
                 startActivity(intent);
             }
         });
@@ -137,11 +138,33 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
         adapter.setLike(new OfficialChildAdapter.setClickLike() {
             @Override
             public void setLike(int position) {
-                ToastUtil.showShort("已收藏");
+                boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
+                String name = (String) SpUtil.getParam(Constants.USERNAME, "");
+
+                if (param){
+                   ToastUtil.showShort("已收藏");
+
+                }else {
+                    startActivityForResult(new Intent(getContext(),LoginActivity.class),100);
+                    ToastUtil.showShort("请先登录");
+                }
+
+
             }
 
             @Override
             public void remove(int id) {
+                boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
+                String name = (String) SpUtil.getParam(Constants.USERNAME, "");
+
+                if (param){
+                    ToastUtil.showShort("取消收藏");
+
+                }else {
+                    startActivityForResult(new Intent(getContext(),LoginActivity.class),100);
+                    ToastUtil.showShort("请先登录");
+                }
+
 
             }
         });
@@ -155,5 +178,4 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
 
 
 
-
-}
+    }

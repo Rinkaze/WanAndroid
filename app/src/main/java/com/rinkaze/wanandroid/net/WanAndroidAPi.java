@@ -66,4 +66,12 @@ public interface WanAndroidApi {
 
     @GET("tree/json")
     Observable<KnowledgeHierarchyData> getKnowledgeHierarchyData();
+
+    //Navigation_收藏
+    @FormUrlEncoded
+    @POST("lg/collect/add/json")
+    Observable<String> getNaviLike(@Field("title")String title,@Field("author")String author,@Field("link") String link);
+
+
+
 }

@@ -1,7 +1,9 @@
 package com.rinkaze.wanandroid.ui.official.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +16,11 @@ import com.just.library.AgentWeb;
 import com.just.library.ChromeClientCallbackManager;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
+import com.rinkaze.wanandroid.base.Constants;
+import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.presenter.officialpresenter.WebPresenter;
+import com.rinkaze.wanandroid.ui.main.activity.LoginActivity;
+import com.rinkaze.wanandroid.utils.SpUtil;
 import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.view.officialview.WebView;
 
@@ -35,6 +41,10 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
     Toolbar webToolbar;
     private AgentWeb agentWeb;
     private String url;
+    private ActionBar actionBar;
+
+    private String author;
+    private String title;
 
     @Override
     protected WebPresenter initPresenter() {
@@ -52,14 +62,21 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
         super.initData();
 
         url = getIntent().getStringExtra("url");
-        final String name = getIntent().getStringExtra("name");
-        ChromeClientCallbackManager.ReceivedTitleCallback mCallback = null;
+
+        author = getIntent().getStringExtra("name");
+        title = getIntent().getStringExtra("title");
+
 
         agentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mContainer, new RelativeLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()
                 .defaultProgressBarColor()
-                .setReceivedTitleCallback(mCallback)
+                .setReceivedTitleCallback(new ChromeClientCallbackManager.ReceivedTitleCallback() {
+                    @Override
+                    public void onReceivedTitle(android.webkit.WebView view, String title) {
+                        webTitle.setText(title);
+                    }
+                })
                 .createAgentWeb()
                 .ready()
                 .go(url);
@@ -75,6 +92,7 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
         setSupportActionBar(webToolbar);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(1, 1, 1, "分享");
@@ -82,6 +100,7 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
         menu.add(1, 3, 1, "用浏览器打开");
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     protected void initListener() {
@@ -106,10 +125,18 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
                 break;
             case 2:
 
+                boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
+                String name = (String) SpUtil.getParam(Constants.USERNAME, "");
+                if (param) {
+                    mPresenter.initNaviLike(title, author, url);
+                } else {
+                    startActivityForResult(new Intent(WebViewActivity.this, LoginActivity.class), 100);
+                    ToastUtil.showShort("请先登录");
+                }
                 break;
             case 3:
                 Uri parse = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW,parse);
+                Intent intent = new Intent(Intent.ACTION_VIEW, parse);
                 startActivity(intent);
                 break;
 
@@ -119,8 +146,22 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == WanAndroidApi.SUCCESS_CODE) {
+            mPresenter.initNaviLike(title, author, url);
+        }
+    }
 
 
+    @Override
+    public void getSuccess(String s) {
+        ToastUtil.showShort(s);
+    }
 
+    @Override
+    public void getFailed(String msg) {
 
+    }
 }

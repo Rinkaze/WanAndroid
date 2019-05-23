@@ -130,14 +130,11 @@ public class HttpUtils {
             //递归+循环的方式把所有的拦截器串联起来,并获取响应结果
             Response response = chain.proceed(request);
             long endTime = System.currentTimeMillis();
-
             //这里不能直接使用response.body().string()的方式输出日志
             //因为response.body().string()之后，response中的流会被关闭，程序会报错，我们需要创建出一
             //个新的response给应用层处理
             ResponseBody responseBody = response.peekBody(1024 * 1024);
-
             Log.d(TAG, String.format("耗时:%s%n收到来自:%s的结果:%n%s",(endTime-startTime)+"ms",response.request().url(),responseBody.string()));
-
             return response;
         }
     }
