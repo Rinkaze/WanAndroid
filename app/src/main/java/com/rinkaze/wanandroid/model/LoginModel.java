@@ -73,4 +73,32 @@ public class LoginModel extends BaseModel {
                     }
                 });
     }
+
+    public void logout(final ResultCallBack<LoginInfo> callBack){
+        HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl,WanAndroidApi.class)
+                .logout()
+                .compose(RxUtils.<LoginInfo>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<LoginInfo>() {
+                    @Override
+                    public void error(String msg) {
+                        Logger.logD(TAG,msg);
+                    }
+
+                    @Override
+                    protected void subscribe(Disposable d) {
+                        addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(LoginInfo loginInfo) {
+                        if (loginInfo != null){
+                            if (loginInfo.getErrorCode() == WanAndroidApi.SUCCESS_CODE){
+                                callBack.onSuccess(loginInfo);
+                            }else {
+                                callBack.onFail(loginInfo.getErrorMsg());
+                            }
+                        }
+                    }
+                });
+    }
 }
