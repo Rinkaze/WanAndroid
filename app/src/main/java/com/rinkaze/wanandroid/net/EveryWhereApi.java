@@ -5,6 +5,7 @@ import com.rinkaze.wanandroid.bean.HomeBanner;
 import com.rinkaze.wanandroid.bean.HomeBean;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -18,5 +19,4 @@ public interface EveryWhereApi {
     Observable<HomeBean>getHomeInit(@Path("num") int num);
         @GET("banner/json")
     Observable<HomeBanner>getBanninit();
-
 }
