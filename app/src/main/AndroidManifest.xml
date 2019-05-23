@@ -15,24 +15,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.activity.HomUrlActivity"></activity>
+        <activity android:name=".ui.main.activity.HomUrlActivity" />
         <activity android:name=".ui.main.activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.knowledge.activity.KnowledgeActivity" />
         <activity android:name=".ui.official.activity.WebViewActivity" />
         <activity android:name=".ui.main.activity.LoginActivity" />
         <activity android:name=".ui.project.activity.ProSubActivity" />
-
-        <activity android:name=".ui.official.activity.WebViewActivity"/>
-        <activity android:name=".ui.navigation.activity.AgentWebActivity"></activity>
-        <activity android:name=".ui.main.activity.LoginActivity"/>
-        <activity android:name=".ui.knowledge.activity.KnowledgeWebActivity"/>
-        <activity android:name=".ui.project.activity.ProSubActivity"/>
+        <activity android:name=".ui.official.activity.WebViewActivity" />
+        <activity android:name=".ui.navigation.activity.AgentWebActivity" />
+        <activity android:name=".ui.main.activity.LoginActivity" />
+        <activity android:name=".ui.knowledge.activity.KnowledgeWebActivity" />
+        <activity android:name=".ui.project.activity.ProSubActivity" />
+        <activity android:name=".ui.white.activity.WhiteActivity"
+            android:theme="@style/SplashStyle"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.rinkaze.wanandroid.net;
 
+import com.google.gson.JsonObject;
 import com.rinkaze.wanandroid.bean.KnowledgeHierarchyData;
 import com.rinkaze.wanandroid.bean.LoginInfo;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
@@ -74,10 +75,8 @@ public interface WanAndroidApi {
 
     @GET("tree/json")
     Observable<KnowledgeHierarchyData> getKnowledgeHierarchyData();
-
-
     //Navigation_收藏
     @FormUrlEncoded
-    @POST("lg/collect/addtool/json")
-    Observable<String> getNaviLike(@Field("name")String name,@Field("link") String link);
+    @POST("lg/collect/add/json")
+    Observable<JsonObject> getNaviLike(@Field("title")String name, @Field("author") String author, @Field("link") String link);
 }
