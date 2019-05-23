@@ -11,8 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rinkaze.wanandroid.R;
+import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.HomeBanner;
 import com.rinkaze.wanandroid.bean.HomeBean;
+import com.rinkaze.wanandroid.utils.SpUtil;
+import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -29,34 +32,36 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     private int num;
 
-    public HomeAdapter(List<HomeBean.DataBean.DatasBean> listitem, List<HomeBanner.DataBean> listBann, Context context) {
-        this.listitem = listitem;
-        this.listBann = listBann;
+    public HomeAdapter(Context context) {
         this.context = context;
+        listBann = new ArrayList<>();
+        listitem = new ArrayList<>();
     }
 
     public void setListitem(List<HomeBean.DataBean.DatasBean> listitem) {
         this.listitem = listitem;
+        notifyDataSetChanged();
     }
 
     public void setListBann(List<HomeBanner.DataBean> listBann) {
         this.listBann = listBann;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        if (i==1){
-            return new MyBanner(LayoutInflater.from(context).inflate(R.layout.banner_home,null));
-        }else {
-            return new MyView(LayoutInflater.from(context).inflate(R.layout.item_home,null));
+        if (i == 1) {
+            return new MyBanner(LayoutInflater.from(context).inflate(R.layout.banner_home, null));
+        } else {
+            return new MyView(LayoutInflater.from(context).inflate(R.layout.item_home, null));
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        if (getItemViewType(i) == 1){
-            final MyBanner myBanner= (MyBanner) viewHolder;
+        if (getItemViewType(i) == 1) {
+            final MyBanner myBanner = (MyBanner) viewHolder;
             myBanner.banner.setImages(listBann);
             mBannerTitleList = new ArrayList<>();
             for (HomeBanner.DataBean dataBean : listBann) {
@@ -66,23 +71,23 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             myBanner.banner.setImageLoader(new ImageLoader() {
                 @Override
                 public void displayImage(Context context, Object path, ImageView imageView) {
-                    HomeBanner.DataBean dataBean= (HomeBanner.DataBean) path;
+                    HomeBanner.DataBean dataBean = (HomeBanner.DataBean) path;
                     Glide.with(context).load(dataBean.getImagePath()).into(imageView);
                 }
             }).setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
             myBanner.banner.setBannerTitles(mBannerTitleList);
             myBanner.banner.setDelayTime(3000);
             myBanner.banner.start();
-        }else {
-            MyView myView= (MyView) viewHolder;
-            int newPosition=i;
-            if (listBann != null && listBann.size()>0){
-                newPosition=i-1;
-                num=newPosition;
+        } else {
+            final MyView myView = (MyView) viewHolder;
+            int newPosition = i;
+            if (listBann != null && listBann.size() > 0) {
+                newPosition = i - 1;
+                num = newPosition;
             }
-            HomeBean.DataBean.DatasBean datasBean = listitem.get(newPosition);
+            final HomeBean.DataBean.DatasBean datasBean = listitem.get(newPosition);
             myView.name.setText(datasBean.getAuthor());
-            myView.chapter.setText(datasBean.getSuperChapterName()+"/");
+            myView.chapter.setText(datasBean.getSuperChapterName() + "/");
             myView.data.setText(datasBean.getNiceDate());
             myView.superCh.setText(datasBean.getChapterName());
             myView.title.setText(datasBean.getTitle());
@@ -93,22 +98,43 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     onItemUrl.onClick(num);
                 }
             });
+            myView.collect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (datasBean.isCollect()) {
+                        if ((boolean) SpUtil.getParam(Constants.LOGIN, false)) {
+                            Glide.with(context).load(R.mipmap.follow_unselected).into(myView.collect);
+                            datasBean.setCollect(false);
+                        }
+                        onItemUrl.setDislike(num);
+                    } else {
+                        if ((boolean) SpUtil.getParam(Constants.LOGIN, false)) {
+                            Glide.with(context).load(R.mipmap.follow).into(myView.collect);
+                            datasBean.setCollect(true);
+                        }
+                        onItemUrl.setLike(num);
+                    }
+                }
+            });
+
+
         }
     }
 
+
     @Override
     public int getItemCount() {
-        if (listBann != null && listBann.size()>0){
-            return listitem.size()+1;
+        if (listBann != null && listBann.size() > 0) {
+            return listitem.size() + 1;
         }
         return listitem.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position==0 && listBann != null && listBann.size()>0){
+        if (position == 0 && listBann != null && listBann.size() > 0) {
             return 1;
-        }else {
+        } else {
             return 2;
         }
     }
@@ -120,6 +146,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final TextView superCh;
         private final TextView title;
         private final TextView data;
+        private final ImageView collect;
 
         public MyView(@NonNull View itemView) {
             super(itemView);
@@ -128,8 +155,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             superCh = itemView.findViewById(R.id.superCh);
             title = itemView.findViewById(R.id.title);
             data = itemView.findViewById(R.id.data);
+            collect = itemView.findViewById(R.id.collect);
         }
     }
+
     class MyBanner extends RecyclerView.ViewHolder {
 
         private final Banner banner;
@@ -146,7 +175,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.onItemUrl = onItemUrl;
     }
 
-    public interface OnItemUrl{
+    public interface OnItemUrl {
         void onClick(int position);
+
+        void setLike(int position);
+
+        void setDislike(int id);
     }
 }

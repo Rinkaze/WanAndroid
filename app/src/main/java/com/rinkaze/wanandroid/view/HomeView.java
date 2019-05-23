@@ -10,4 +10,6 @@ public interface HomeView extends BaseMvpView {
     void onFail1(String msg1);
     void onSuccess2(HomeBanner bean);
     void onFail2(String msg2);
+    void onCollectSucceed(String bean);
+    void onCollectFalse(String msg2);
 }
