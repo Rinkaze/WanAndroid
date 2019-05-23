@@ -77,6 +77,7 @@ public interface WanAndroidApi {
 
 
     //Navigation_收藏
-    @GET("lg/collect/addtool/json")
+    @FormUrlEncoded
+    @POST("lg/collect/addtool/json")
     Observable<String> getNaviLike(@Field("name")String name,@Field("link") String link);
 }

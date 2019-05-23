@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import com.just.library.ChromeClientCallbackManager;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
 import com.rinkaze.wanandroid.base.Constants;
+import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.presenter.NaviLikePresenter;
 import com.rinkaze.wanandroid.presenter.officialpresenter.NaviWebPresenter;
 import com.rinkaze.wanandroid.ui.main.activity.LoginActivity;
@@ -132,5 +134,13 @@ public class AgentWebActivity extends BaseActivity<NaviLikeView, NaviLikePresent
     @Override
     public void onFina(String msg) {
         ToastUtil.showShort(msg);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == WanAndroidApi.SUCCESS_CODE){
+            mPresenter.initNaviLike((String) SpUtil.getParam(Constants.USERNAME, ""),link);
+        }
     }
 }
