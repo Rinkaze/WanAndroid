@@ -75,7 +75,7 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
             @Override
             public void onTabReselected(TabView tab, int position) {
             }
-        });
+
      //配置Recyclerview
         final LinearLayoutManager mManager = new LinearLayoutManager(getContext());
         recyc.setLayoutManager(mManager);

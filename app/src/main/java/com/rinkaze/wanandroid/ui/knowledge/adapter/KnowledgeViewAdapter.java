@@ -38,23 +38,25 @@ public class KnowledgeViewAdapter extends RecyclerView.Adapter<KnowledgeViewAdap
 
     @Override
     public void onBindViewHolder(@NonNull KnowledgeViewAdapter.ViewHolder viewHolder, final int i) {
-        dataBean = mKnowledgeList.get(i);
-        viewHolder.tv_data.setText(mKnowledgeList.get(i).getName());
+        if (mKnowledgeList.get(i) != null) {
+            dataBean = mKnowledgeList.get(i);
+            viewHolder.tv_data.setText(mKnowledgeList.get(i).getName());
 
-        List<KnowledgeHierarchyData.DataBean.ChildrenBean> children = mKnowledgeList.get(i).getChildren();
-         StringBuffer stringBuffer = new StringBuffer();
-        for (KnowledgeHierarchyData.DataBean.ChildrenBean child : children) {
-            stringBuffer.append(child.getName()).append("  ");
-        }
-        viewHolder.tv_children.setText(stringBuffer);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onKnowledgeClick!=null){
-                    onKnowledgeClick.onKnowledgeItemClick(dataBean,i);
-                }
+            List<KnowledgeHierarchyData.DataBean.ChildrenBean> children = mKnowledgeList.get(i).getChildren();
+            StringBuffer stringBuffer = new StringBuffer();
+            for (KnowledgeHierarchyData.DataBean.ChildrenBean child : children) {
+                stringBuffer.append(child.getName()).append("  ");
             }
-        });
+            viewHolder.tv_children.setText(stringBuffer);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onKnowledgeClick != null) {
+                        onKnowledgeClick.onKnowledgeItemClick(dataBean, i);
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -65,15 +67,18 @@ public class KnowledgeViewAdapter extends RecyclerView.Adapter<KnowledgeViewAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_data;
         private TextView tv_children;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_data=itemView.findViewById(R.id.tv_data);
-            tv_children=itemView.findViewById(R.id.tv_children);
+            tv_data = itemView.findViewById(R.id.tv_data);
+            tv_children = itemView.findViewById(R.id.tv_children);
         }
     }
-    public  interface  onKnowledgeClick{
-        void onKnowledgeItemClick(KnowledgeHierarchyData.DataBean dataBean,int postion);
+
+    public interface onKnowledgeClick {
+        void onKnowledgeItemClick(KnowledgeHierarchyData.DataBean dataBean, int postion);
     }
+
     onKnowledgeClick onKnowledgeClick;
 
     public void setOnKnowledgeClick(KnowledgeViewAdapter.onKnowledgeClick onKnowledgeClick) {
