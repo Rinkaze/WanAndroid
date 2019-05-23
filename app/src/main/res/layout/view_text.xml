@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/dp_20"
-    android:background="@color/colorPrimary"
-    android:id="@+id/navigation_tv"/>
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/textview"
+        android:padding="@dimen/dp_7"
+        android:background="@drawable/textback"
+        android:layout_marginTop="@dimen/dp_15"/>
+
+</LinearLayout>

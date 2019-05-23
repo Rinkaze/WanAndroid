@@ -1,6 +1,7 @@
 package com.rinkaze.wanandroid.ui.project.fragment;
 
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -58,7 +59,11 @@ public class ProjectFragment extends BaseFragment<ProjectView, ProjectPresenter>
         mFragments = new ArrayList<>();
         List<ProjectClassBean.DataBean> list = bean.getData();
         for (int i = 0; i < list.size(); i++) {
-            mFragments.add(new ProjectListFragment(list.get(i).getId()));
+            ProjectListFragment projectListFragment = new ProjectListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("cid",list.get(i).getId());
+            projectListFragment.setArguments(bundle);
+            mFragments.add(projectListFragment);
             mTab.addTab(mTab.newTab().setText(list.get(i).getName()));
         }
         mTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -81,5 +86,12 @@ public class ProjectFragment extends BaseFragment<ProjectView, ProjectPresenter>
 
         mAdapter = new VpProjectAdapter(getChildFragmentManager(), mFragments);
         mVp.setAdapter(mAdapter);
+    }
+
+    public void scrollTop() {
+        if (mFragments != null && mVp != null){
+            ProjectListFragment projectListFragment = (ProjectListFragment) mFragments.get(mVp.getCurrentItem());
+            projectListFragment.scrollTop();
+        }
     }
 }

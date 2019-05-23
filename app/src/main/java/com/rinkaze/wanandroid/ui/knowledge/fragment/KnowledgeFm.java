@@ -46,6 +46,8 @@ public class KnowledgeFm extends BaseFragment<KnowledgeView, KnowledgeP> impleme
         mKnowledgeReview.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         mAdapter = new KnowledgeViewAdapter(getContext(), mKnowledgeList);
         mKnowledgeReview.setAdapter(mAdapter);
+
+
     }
 
     @Override
@@ -70,4 +72,9 @@ public class KnowledgeFm extends BaseFragment<KnowledgeView, KnowledgeP> impleme
         Logger.logD("KnowledgeFm",e);
     }
 
+    public void scrollTop() {
+        if (mKnowledgeReview != null){
+            mKnowledgeReview.smoothScrollToPosition(0);
+        }
+    }
 }

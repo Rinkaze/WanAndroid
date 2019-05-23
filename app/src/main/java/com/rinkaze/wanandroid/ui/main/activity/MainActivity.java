@@ -1,5 +1,7 @@
 package com.rinkaze.wanandroid.ui.main.activity;
 
+import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,6 +18,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -23,6 +26,9 @@ import android.widget.TextView;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
 import com.rinkaze.wanandroid.base.Constants;
+import com.rinkaze.wanandroid.bean.LoginInfo;
+import com.rinkaze.wanandroid.model.LoginModel;
+import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.presenter.EmptyPresenter;
 import com.rinkaze.wanandroid.ui.knowledge.fragment.KnowledgeFm;
@@ -31,6 +37,8 @@ import com.rinkaze.wanandroid.ui.navigation.fragment.NaviFragment;
 import com.rinkaze.wanandroid.ui.official.fragment.OfficialFragment;
 import com.rinkaze.wanandroid.ui.project.fragment.ProjectFragment;
 import com.rinkaze.wanandroid.utils.SpUtil;
+import com.rinkaze.wanandroid.utils.ToastUtil;
+import com.rinkaze.wanandroid.utils.UIModeUtil;
 import com.rinkaze.wanandroid.view.EmptyView;
 
 import java.util.ArrayList;
@@ -39,9 +47,6 @@ import butterknife.BindView;
 
 
 public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implements EmptyView, View.OnClickListener {
-
-    private String [] arr={"知识","我的"};
-    private ArrayList<Fragment> list;
 
     @BindView(R.id.toolBar)
     Toolbar mToolBar;
@@ -64,6 +69,11 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     private final int PROJECT_TYPE = 4;
     private int lastPosition = 0;
     private TextView tvLogin;
+    private MainFragment mainFragment;
+    private KnowledgeFm knowledgeFm;
+    private OfficialFragment officialFragment;
+    private NaviFragment naviFragment;
+    private ProjectFragment projectFragment;
 
     @Override
     protected EmptyPresenter initPresenter() {
@@ -77,14 +87,12 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
 
     @Override
     protected void initView() {
-        list = new ArrayList<>();
         mToolBar.setTitle("玩Android");
         mToolBar.setNavigationIcon(null);
         //设置左上角侧滑开关并将颜色改为白色
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDl, mToolBar, 0, 0);
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         mDl.addDrawerListener(toggle);
-        mMainFloatingActionBtn.setOnClickListener(this);
         toggle.syncState();
         initNav();
         initTab();
@@ -101,16 +109,22 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
             tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
         }
         tvLogin.setOnClickListener(this);
+
     }
 
     //添加Fragment并默认显示第一个Fragment
     private void initFragment() {
         fragments = new ArrayList<>();
-        fragments.add(new MainFragment());
-        fragments.add(new KnowledgeFm());
-        fragments.add(new OfficialFragment());
-        fragments.add(new NaviFragment());
-        fragments.add(new ProjectFragment());
+        mainFragment = new MainFragment();
+        fragments.add(mainFragment);
+        knowledgeFm = new KnowledgeFm();
+        fragments.add(knowledgeFm);
+        officialFragment = new OfficialFragment();
+        fragments.add(officialFragment);
+        naviFragment = new NaviFragment();
+        fragments.add(naviFragment);
+        projectFragment = new ProjectFragment();
+        fragments.add(projectFragment);
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction tran = fragmentManager.beginTransaction();
         tran.add(R.id.fragment_container, fragments.get(0)).commit();
@@ -164,7 +178,85 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
 
             }
         });
+        mMainFloatingActionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (lastPosition) {
+                    case MAIN_TYPE:
+                        if (mainFragment != null){
+                            mainFragment.scrollTop();
+                        }
+                        break;
+                    case KNOWLEDGE_TYPE:
+                        if (knowledgeFm != null){
+                            knowledgeFm.scrollTop();
+                        }
+                        break;
+                    case WECHAT_TYPE:
+                        if (officialFragment != null){
+                            officialFragment.scrollTop();
+                        }
+                        break;
+                    case NAVIGATION_TYPE:
+                        if (naviFragment != null){
+                            naviFragment.scrollTop();
+                        }
+                        break;
+                    case PROJECT_TYPE:
+                        if (projectFragment != null){
+                            projectFragment.scrollTop();
+                        }
+                        break;
+                }
+            }
+        });
+        mNv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_collect:
+                        //收藏
+                        startActivity(new Intent(MainActivity.this,CollectActivity.class));
+                        break;
+                    case R.id.nav_todo:
+                        //TODO
+                        break;
+                    case R.id.nav_night:
+                        //夜间模式
+                        UIModeUtil.changeModeUI(MainActivity.this);
+                        break;
+                    case R.id.nav_setting:
+                        //设置
+                        break;
+                    case R.id.nav_about:
+                        //关于我们
+                        break;
+                    case R.id.nav_logout:
+                        //退出登录
+                        if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
+                            showLoading();
+                            new LoginModel().logout(new ResultCallBack<LoginInfo>() {
+                                @Override
+                                public void onSuccess(LoginInfo bean) {
+                                    SpUtil.setParam(Constants.USERNAME,"登录");
+                                    SpUtil.setParam(Constants.TOKEN,0);
+                                    SpUtil.setParam(Constants.LOGIN,false);
+                                    tvLogin.setText(R.string.login);
+                                    ToastUtil.showShort("已退出登录");
+                                    hideLoading();
+                                }
 
+                                @Override
+                                public void onFail(String msg) {
+                                    ToastUtil.showShort(msg);
+                                }
+                            });
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -187,14 +279,18 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.main_floating_action_btn:
-                //滑动到页面顶部
-                mFragmentContainer.scrollBy(0,0);
-                break;
             case R.id.tv_login:
                 if (tvLogin.getText().toString().trim().equals("登录"))
-                startActivityForResult(new Intent(this,LoginActivity.class),100);
+                    startActivityForResult(new Intent(this,LoginActivity.class),100);
                 break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
+            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
         }
     }
 

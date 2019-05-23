@@ -62,6 +62,14 @@
             android:layout_toRightOf="@id/chapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/follow_unselected"
+            android:layout_marginTop="@dimen/dp_8"
+            android:id="@+id/collect"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25" />
 
     </RelativeLayout>
     <View
