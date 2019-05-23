@@ -30,7 +30,6 @@ public class UIModeUtil {
             BaseApp.mMode = AppCompatDelegate.MODE_NIGHT_NO;
         }
     }
-
     /**
      * 设置当前的模式
      * @param activity
