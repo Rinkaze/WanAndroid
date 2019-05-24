@@ -45,6 +45,7 @@ public interface WanAndroidApi {
     @POST("user/register")
     Observable<LoginInfo> register(@Field("username")String username, @Field("password")String psw,@Field("repassword")String rePsw);
 
+
     /**
      * 退出登录接口
      * @return
@@ -90,4 +91,7 @@ public interface WanAndroidApi {
 	@FormUrlEncoded
 	@POST("lg/uncollect/{id}/json")
     Observable<String> disCollect(@Path("id")int id,@Field("originId")int originId);
+
+	@POST("lg/collect/{id}/json")
+    Observable<String> getCollect(@Path("id")int id);
 }

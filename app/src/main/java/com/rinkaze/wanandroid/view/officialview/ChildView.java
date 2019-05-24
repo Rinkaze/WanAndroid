@@ -7,4 +7,10 @@ public interface ChildView extends BaseMvpView {
 
     void getSuccess(FeedArticleListData feedArticleListData);
     void getFailed(String msg);
+
+    void getCollect(String msg);
+    void getCollectFailed(String msg);
+
+    void getDiscollect(String msg);
+    void getDiscollectFailed(String msg);
 }

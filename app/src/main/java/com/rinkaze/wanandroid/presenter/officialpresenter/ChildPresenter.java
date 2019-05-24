@@ -32,4 +32,33 @@ public class ChildPresenter extends BasePresenter<ChildView> {
         });
 
     }
+
+    public void  getCollect(int id){
+        mChildMoudle.getCollect(id, new ResultCallBack<String>() {
+            @Override
+            public void onSuccess(String bean) {
+                mMvpView.getCollect(bean);
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mMvpView.getCollectFailed(msg);
+            }
+        });
+    }
+
+    public void getDiscollect(int id,int originId){
+        mChildMoudle.getDisCollect(id, originId, new ResultCallBack<String>() {
+            @Override
+            public void onSuccess(String bean) {
+                mMvpView.getDiscollect(bean);
+            }
+
+            @Override
+            public void onFail(String msg) {
+            mMvpView.getDiscollectFailed(msg);
+            }
+        });
+
+    }
 }

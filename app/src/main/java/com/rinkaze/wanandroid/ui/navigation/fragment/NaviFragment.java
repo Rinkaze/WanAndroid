@@ -72,11 +72,12 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
             public void onTabSelected(TabView tab, int position) {
                 recyc.scrollToPosition(position);
             }
+
             @Override
             public void onTabReselected(TabView tab, int position) {
             }
-
-     //配置Recyclerview
+        });
+        //配置Recyclerview
         final LinearLayoutManager mManager = new LinearLayoutManager(getContext());
         recyc.setLayoutManager(mManager);
         adapter = new NaviRecAdapter(getContext());
@@ -85,21 +86,22 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
         recyc.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-             tablayout.setTabSelected(mManager.findFirstVisibleItemPosition());
+                tablayout.setTabSelected(mManager.findFirstVisibleItemPosition());
 //                tablayout.setVerticalScrollbarPosition(mManager.findFirstVisibleItemPosition());
             }
         });
         adapter.setListener(new NaviRecAdapter.OnItenClickListener() {
             @Override
-            public void listener(String link,String title,String author) {
+            public void listener(String link, String title, String author) {
                 Intent intent = new Intent(getContext(), AgentWebActivity.class);
-                intent.putExtra("author",author);
-                intent.putExtra("title",title);
-                intent.putExtra("link",link);
+                intent.putExtra("author", author);
+                intent.putExtra("title", title);
+                intent.putExtra("link", link);
                 startActivity(intent);
             }
         });
     }
+
     @Override
     protected void initData() {
         mPresenter.initNavigation();
@@ -109,9 +111,10 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
     public void initSuccess(Navi_Tab_Bean navibean) {
         List<Navi_Tab_Bean.DataEntity> data = navibean.getData();
         datalist.addAll(data);
-       adapter.setList((ArrayList<Navi_Tab_Bean.DataEntity>) navibean.getData());
+        adapter.setList((ArrayList<Navi_Tab_Bean.DataEntity>) navibean.getData());
         initTab(data);
     }
+
     private void initTab(final List<Navi_Tab_Bean.DataEntity> data) {
         //tab适配器
         tablayout.setTabAdapter(new TabAdapter() {
@@ -150,7 +153,7 @@ public class NaviFragment extends BaseFragment<NaviView, NaviPresenter> implemen
     }
 
     public void scrollTop() {
-        if (recyc != null){
+        if (recyc != null) {
             recyc.smoothScrollToPosition(0);
         }
     }

@@ -48,7 +48,7 @@ public class OfficialChildAdapter extends RecyclerView.Adapter<OfficialChildAdap
             public void onClick(View view) {
                 if (list.get(i) != null) {
                     if (list.get(i).isCollect()) {
-                        like.remove(list.get(i).getId());
+                        like.remove(list.get(i).getId(),-1);
                         Glide.with(context)
                                 .load(R.mipmap.follow_unselected)
                                 .into(viewHolder.ivCollect);
@@ -131,7 +131,7 @@ public class OfficialChildAdapter extends RecyclerView.Adapter<OfficialChildAdap
     }
     public interface setClickLike {
         void setLike(int position);
-        void remove(int id);
+        void remove(int id,int orId);
     }
     public void setLike(setClickLike like) {
         this.like = like;

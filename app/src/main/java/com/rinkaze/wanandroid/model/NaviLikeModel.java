@@ -21,11 +21,11 @@ public class NaviLikeModel extends BaseModel {
     private static final String TAG = "NaviLikeModel";
     public void initNaviLike(String name,String author, String link, final ResultCallBack<String> resultCallBack){
         WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
-        Observable<JsonObject> naviLike = apiserver.getNaviLike(name,author,link);
-        naviLike.compose(RxUtils.<JsonObject>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<JsonObject>() {
+        Observable<String> naviLike = apiserver.getNaviLike(name,author,link);
+        naviLike.compose(RxUtils.<String>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<String>() {
                     @Override
-                    public void onNext(JsonObject s) {
+                    public void onNext(String s) {
                         try {
                             JSONObject jsonObject = new JSONObject(s.toString());
                             int errorCode = jsonObject.getInt("errorCode");

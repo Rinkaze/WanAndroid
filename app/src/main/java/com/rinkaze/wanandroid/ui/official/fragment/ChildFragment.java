@@ -50,6 +50,7 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
 
     Unbinder unbinder1;
     private int page = 1;
+    private int orId = -1;
     private ArrayList<FeedArticleListData.DataBean.DatasBean> list;
     private OfficialChildAdapter adapter;
     private int id;
@@ -122,8 +123,8 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
                 link = datasBean.getLink();
                 author = datasBean.getAuthor();
                 title = datasBean.getTitle();
-                intent.putExtra("url", link);
-                intent.putExtra("name", author);
+                intent.putExtra("link", link);
+                intent.putExtra("author", author);
                 intent.putExtra("title", title);
                 startActivity(intent);
             }
@@ -136,6 +137,7 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
                 String name = (String) SpUtil.getParam(Constants.USERNAME, "");
 
                 if (param){
+                    mPresenter.getCollect(id);
                    ToastUtil.showShort("已收藏");
 
                 }else {
@@ -147,11 +149,12 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
             }
 
             @Override
-            public void remove(int id) {
+            public void remove(int id, int orId) {
                 boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
                 String name = (String) SpUtil.getParam(Constants.USERNAME, "");
 
                 if (param){
+                    mPresenter.getDiscollect(id,-1);
                     ToastUtil.showShort("取消收藏");
 
                 }else {
@@ -161,6 +164,8 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
 
 
             }
+
+
         });
 
     }
@@ -168,6 +173,26 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
     @Override
     public void getFailed(String msg) {
         Logger.logD(TAG, msg);
+    }
+
+    @Override
+    public void getCollect(String msg) {
+        ToastUtil.showShort(msg);
+    }
+
+    @Override
+    public void getCollectFailed(String msg) {
+        ToastUtil.showShort(msg);
+    }
+
+    @Override
+    public void getDiscollect(String msg) {
+        ToastUtil.showShort(msg);
+    }
+
+    @Override
+    public void getDiscollectFailed(String msg) {
+        ToastUtil.showShort(msg);
     }
 
     public void scrollTop() {
