@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -106,11 +105,11 @@
         android:layout_height="wrap_content"
         android:text="@string/text4"
         android:layout_marginTop="@dimen/dp_400"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_60"
         android:singleLine="false"
         android:textSize="@dimen/sp_12"
         android:id="@+id/text4"
+
         />
 
     <TextView
@@ -144,6 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/url"
+                android:id="@+id/url"
                 android:textColor="@color/colorPrimary" />
            <TextView
                android:layout_width="wrap_content"
@@ -160,8 +160,6 @@
                 />
     </LinearLayout>
 
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -170,6 +168,18 @@
         android:layout_marginTop="@dimen/dp_70"
         android:layout_alignLeft="@id/text1"
         android:id="@+id/text6"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yuanma"
+        android:textColor="@color/c_787878"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp_18"
+        android:layout_alignLeft="@id/text1"
+        android:layout_below="@id/text4"
+        android:layout_marginTop="@dimen/dp_100"
         />
 
 </RelativeLayout>
