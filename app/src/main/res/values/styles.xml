@@ -21,11 +21,7 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-<<<<<<< .mine
-
-=======
     <!--将用于配置到特定的Activity上的样式-->
->>>>>>> .theirs
     <style name="SplashStyle" parent="AppTheme">
         <item name="android:windowBackground">@drawable/white</item>
     </style>

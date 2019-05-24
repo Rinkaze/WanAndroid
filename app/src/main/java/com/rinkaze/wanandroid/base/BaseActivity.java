@@ -81,4 +81,8 @@ public abstract class BaseActivity<V extends BaseMvpView,P extends BasePresenter
             mLoadingDialog.dismiss();
         }
     }
+
+    public AppCompatActivity getContext() {
+        return this;
+    }
 }

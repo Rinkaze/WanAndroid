@@ -16,11 +16,16 @@ import com.rinkaze.wanandroid.net.IListService;
 import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.RxUtils;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
+import com.rinkaze.wanandroid.utils.SpUtil;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
 public class ProjectClassifyModel extends BaseModel {
+
+    private String psw;
+    private String name;
+
     //网络请求数据    列表文章
     public void getData(final int page, final int cid, final ResultCallBack<ProjectListBean> callBack) {
         IListService apiserver = HttpUtils.getInstance().getApiserver(IListService.DataUrl, IListService.class);
@@ -51,8 +56,10 @@ public class ProjectClassifyModel extends BaseModel {
 
     private static final String TAG = "ProjectClassifyModel";
     public void getLike(int id, final ResultCallBack<String>resultCallBack){
+        psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
+        name = (String) SpUtil.getParam(Constants.USERNAME, "");
         HttpUtils.getInstance().getApiserver(IListService.DataUrl,IListService.class)
-                .getCollect(id)
+                .getCollect(name,psw,id)
                 .compose(RxUtils.<String>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<String>() {
                     @Override
@@ -73,7 +80,7 @@ public class ProjectClassifyModel extends BaseModel {
     }
     public void getDisLike(int disid, final ResultCallBack<String>resultCallBack){
         HttpUtils.getInstance().getApiserver(IListService.DataUrl,IListService.class)
-                .getDisCollect(disid)
+                .getDisCollect(name,psw,disid)
                 .compose(RxUtils.<String>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<String>() {
                     @Override

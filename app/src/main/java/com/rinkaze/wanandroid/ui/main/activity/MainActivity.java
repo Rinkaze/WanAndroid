@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
+import com.rinkaze.wanandroid.base.BaseApp;
 import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.LoginInfo;
 import com.rinkaze.wanandroid.model.LoginModel;
@@ -228,7 +229,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                         break;
                     case R.id.nav_night:
                         //夜间模式
-                        UIModeUtil.changeModeUI(MainActivity.this);
+                        UIModeUtil.changeModeUI(getContext());
                         break;
                     case R.id.nav_setting:
                         //设置

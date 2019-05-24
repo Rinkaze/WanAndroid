@@ -64,7 +64,7 @@ public class RlvProjectClassifyAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onItemClick(v, i);
+                    mListener.onItemClick(datasBean.getLink(),datasBean.getTitle(),datasBean.getAuthor(), i);
                 }
             }
         });

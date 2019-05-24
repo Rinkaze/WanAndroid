@@ -11,6 +11,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -40,8 +41,8 @@ public interface IListService {
     Observable<ProjectListBean> getProjectListData(@Path("page") int page,@Query("cid") int cid);
     //收藏
     @POST("lg/collect/{id}/json")
-    Observable<String> getCollect(@Path("id") int id);
+    Observable<String> getCollect(@Header("Cookie")String name, @Header("Cookie")String psw, @Path("id") int id);
 
     @POST("lg/uncollect_originId/{disid}/json")
-    Observable<String> getDisCollect(@Path("disid") int disid);
+    Observable<String> getDisCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("disid") int disid);
 }
