@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
+import com.rinkaze.wanandroid.utils.GlideUtil;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class KAViewAdapter extends RecyclerView.Adapter<KAViewAdapter.ViewHolder
 
     public void setmList(List<FeedArticleListData.DataBean.DatasBean> mList) {
         this.mList = mList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -47,7 +49,9 @@ public class KAViewAdapter extends RecyclerView.Adapter<KAViewAdapter.ViewHolder
             viewHolder.tv_niceDate.setText(mList.get(i).getNiceDate());
             viewHolder.tv_title.setText(mList.get(i).getTitle());
             viewHolder.tv_superChapterName.setText(mList.get(i).getSuperChapterName() + "/" + mList.get(i).getAuthor());
-
+            if (datasBean.isCollect()){
+                GlideUtil.loadNoCatchImg(context,R.mipmap.zhanweitu_home_kapian_hdpi,R.mipmap.follow,viewHolder.img_follow);
+            }
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -60,18 +64,20 @@ public class KAViewAdapter extends RecyclerView.Adapter<KAViewAdapter.ViewHolder
             viewHolder.img_follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mList.get(i).isCollect()) {
-                        like.remove(mList.get(i).getId());
-                        Glide.with(context)
-                                .load(R.mipmap.follow_unselected)
-                                .into(viewHolder.img_follow);
-                        mList.get(i).setCollect(false);
-                    } else {
-                        like.like(mList.get(i).getId());
-                        Glide.with(context)
-                                .load(R.mipmap.follow)
-                                .into(viewHolder.img_follow);
-                        mList.get(i).setCollect(true);
+                    if (like != null){
+                        if (mList.get(i).isCollect()) {
+                            like.remove(mList.get(i).getId());
+                            Glide.with(context)
+                                    .load(R.mipmap.follow_unselected)
+                                    .into(viewHolder.img_follow);
+                            mList.get(i).setCollect(false);
+                        } else {
+                            like.like(mList.get(i).getId());
+                            Glide.with(context)
+                                    .load(R.mipmap.follow)
+                                    .into(viewHolder.img_follow);
+                            mList.get(i).setCollect(true);
+                        }
                     }
                 }
             });

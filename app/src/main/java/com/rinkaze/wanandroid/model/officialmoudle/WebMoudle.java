@@ -27,20 +27,19 @@ public class WebMoudle extends BaseModel {
         psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
         name = (String) SpUtil.getParam(Constants.USERNAME, "");
         WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
-        Observable<String> naviLike = apiserver.getNaviLike(name,psw,title,author, link);
-        naviLike.compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+        Observable<JSONObject> naviLike = apiserver.getNaviLike(name,psw,title,author, link);
+        naviLike.compose(RxUtils.<JSONObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JSONObject>() {
                     @Override
-                    public void onNext(String s) {
+                    public void onNext(JSONObject s) {
                         try {
-                            JSONObject jsonObject = new JSONObject(s);
-                            int errorCode = jsonObject.getInt("errorCode");
+                            int errorCode = s.getInt("errorCode");
                             Log.e(TAG, "onNext: "+errorCode );
                             if (errorCode==WanAndroidApi.SUCCESS_CODE){
                                 callBack.onSuccess("收藏成功");
 
                             }else{
-                                callBack.onFail(jsonObject.getString("errorMsg"));
+                                callBack.onFail(s.getString("errorMsg"));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

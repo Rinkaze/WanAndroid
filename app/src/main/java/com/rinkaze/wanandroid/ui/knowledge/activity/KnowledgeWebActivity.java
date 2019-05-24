@@ -60,6 +60,7 @@ public class KnowledgeWebActivity extends BaseActivity<KnWebView, KnWebPresenter
     @Override
     protected void initView() {
         Intent intent = getIntent();
+        mWebtoolbar.setTitle("");
         link = intent.getStringExtra(Constants.EMAIL);
         title = intent.getStringExtra(Constants.DATA);
         anthor = intent.getStringExtra(Constants.DESC);

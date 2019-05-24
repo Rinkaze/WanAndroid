@@ -9,5 +9,6 @@ public interface KAView extends BaseMvpView {
 
     //取消收藏
     void KACancelData(String s);
+    void KACollectData(String s);
 
 }

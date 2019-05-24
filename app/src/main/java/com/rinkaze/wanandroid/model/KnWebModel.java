@@ -19,26 +19,16 @@ public class KnWebModel extends BaseModel {
     private String psw;
     private String name;
 
-    public void onKnWebModel(String title, String author, String link, final ResultCallBack<String> callBack){
+    public void onKnWebModel(String title, String author, String link, final ResultCallBack<String> callBack) {
         psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
         name = (String) SpUtil.getParam(Constants.USERNAME, "");
         WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
-        apiserver.getNaviLike(name,psw,title,author,link)
-                .compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+        apiserver.getNaviLike(name, psw, title, author, link)
+                .compose(RxUtils.<JSONObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JSONObject>() {
                     @Override
-                    public void onNext(String s) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(s);
-                            int code = jsonObject.getInt("errorCode");
-                            if (code==WanAndroidApi.SUCCESS_CODE){
-                                callBack.onSuccess("收藏成功");
-                            }else {
-                                callBack.onSuccess("收藏失败");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onNext(JSONObject s) {
+                        callBack.onSuccess("收藏成功");
                     }
 
                     @Override
@@ -48,7 +38,7 @@ public class KnWebModel extends BaseModel {
 
                     @Override
                     protected void subscribe(Disposable d) {
-                    addDisposable(d);
+                        addDisposable(d);
                     }
                 });
     }
