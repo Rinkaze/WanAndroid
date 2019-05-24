@@ -8,11 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
+import com.rinkaze.wanandroid.utils.GlideUtil;
 
 import java.util.List;
+
+import retrofit2.http.POST;
 
 public class KAViewAdapter extends RecyclerView.Adapter<KAViewAdapter.ViewHolder> {
     private Context context;
@@ -25,6 +29,7 @@ public class KAViewAdapter extends RecyclerView.Adapter<KAViewAdapter.ViewHolder
 
     public void setmList(List<FeedArticleListData.DataBean.DatasBean> mList) {
         this.mList = mList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -35,21 +40,48 @@ public class KAViewAdapter extends RecyclerView.Adapter<KAViewAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull KAViewAdapter.ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final KAViewAdapter.ViewHolder viewHolder, final int i) {
         final FeedArticleListData.DataBean.DatasBean datasBean = mList.get(i);
-        viewHolder.tv_author.setText(mList.get(i).getAuthor());
-        viewHolder.tv_niceDate.setText(mList.get(i).getNiceDate());
-        viewHolder.tv_title.setText(mList.get(i).getTitle());
-        viewHolder.tv_superChapterName.setText(mList.get(i).getSuperChapterName()+"/"+mList.get(i).getAuthor());
+        if (datasBean != null) {
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onKAClick!=null){
-                    onKAClick.setonKAItemClick(datasBean,i);
-                }
+
+            viewHolder.tv_author.setText(mList.get(i).getAuthor());
+            viewHolder.tv_niceDate.setText(mList.get(i).getNiceDate());
+            viewHolder.tv_title.setText(mList.get(i).getTitle());
+            viewHolder.tv_superChapterName.setText(mList.get(i).getSuperChapterName() + "/" + mList.get(i).getAuthor());
+            if (datasBean.isCollect()){
+                GlideUtil.loadNoCatchImg(context,R.mipmap.zhanweitu_home_kapian_hdpi,R.mipmap.follow,viewHolder.img_follow);
             }
-        });
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onKAClick != null) {
+                        onKAClick.setonKAItemClick(datasBean, i);
+                    }
+                }
+            });
+            //心形
+            viewHolder.img_follow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (like != null){
+                        if (mList.get(i).isCollect()) {
+                            like.remove(mList.get(i).getId());
+                            Glide.with(context)
+                                    .load(R.mipmap.follow_unselected)
+                                    .into(viewHolder.img_follow);
+                            mList.get(i).setCollect(false);
+                        } else {
+                            like.like(mList.get(i).getId());
+                            Glide.with(context)
+                                    .load(R.mipmap.follow)
+                                    .into(viewHolder.img_follow);
+                            mList.get(i).setCollect(true);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -63,21 +95,38 @@ public class KAViewAdapter extends RecyclerView.Adapter<KAViewAdapter.ViewHolder
         private TextView tv_title;
         private TextView tv_superChapterName;
         private ImageView img_follow;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_author=itemView.findViewById(R.id.tv_author);
-            tv_niceDate=itemView.findViewById(R.id.tv_niceDate);
-            tv_title=itemView.findViewById(R.id.tv_title);
-            tv_superChapterName=itemView.findViewById(R.id.tv_superChapterName);
-            img_follow=itemView.findViewById(R.id.img_follow);
+            tv_author = itemView.findViewById(R.id.tv_author);
+            tv_niceDate = itemView.findViewById(R.id.tv_niceDate);
+            tv_title = itemView.findViewById(R.id.tv_title);
+            tv_superChapterName = itemView.findViewById(R.id.tv_superChapterName);
+            img_follow = itemView.findViewById(R.id.img_follow);
         }
     }
-    public interface onKAClick{
-        void setonKAItemClick(FeedArticleListData.DataBean.DatasBean datasBean,int postion);
+
+    public interface onKAClick {
+        void setonKAItemClick(FeedArticleListData.DataBean.DatasBean datasBean, int postion);
     }
+
     onKAClick onKAClick;
 
     public void setOnKAClick(KAViewAdapter.onKAClick onKAClick) {
         this.onKAClick = onKAClick;
     }
+
+    //心形
+    public interface OnItenClickListener {
+        void like(int id);//收藏
+
+        void remove(int id);//不收藏
+    }
+
+    private OnItenClickListener like;
+
+    public void setLike(OnItenClickListener like) {
+        this.like = like;
+    }
+
 }

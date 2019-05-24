@@ -26,7 +26,7 @@ public class KnowledgeModel extends BaseModel {
                 .subscribe(new BaseObserver<KnowledgeHierarchyData>() {
                     @Override
                     public void onNext(KnowledgeHierarchyData knowledgeHierarchyData) {
-                     callback.onSuccess(knowledgeHierarchyData);
+                        callback.onSuccess(knowledgeHierarchyData);
                     }
 
                     @Override

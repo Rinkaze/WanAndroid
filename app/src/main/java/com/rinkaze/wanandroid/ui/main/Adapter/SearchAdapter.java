@@ -34,7 +34,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         Myview myview= (Myview) viewHolder;
         colorlist = new ArrayList<>();
         colorlist.add(Color.RED);
@@ -57,6 +57,12 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
             myview.search.addView(view);
         }
+        myview.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onitemclick.Clickitem(i);
+            }
+        });
 
     }
 
@@ -71,5 +77,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
             search = itemView.findViewById(R.id.search_flow);
         }
+    }
+
+    private Onitemclick onitemclick;
+
+    public void setOnitemclick(Onitemclick onitemclick) {
+        this.onitemclick = onitemclick;
+    }
+
+    public interface Onitemclick{
+        void Clickitem(int position);
     }
 }

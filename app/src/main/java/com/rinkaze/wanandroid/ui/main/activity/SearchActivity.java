@@ -1,5 +1,6 @@
 package com.rinkaze.wanandroid.ui.main.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -59,9 +60,18 @@ public class SearchActivity extends BaseActivity<SearchView, SearchPresenter> im
 
     @Override
     public void onSuccess(SearchBean bean) {
-        List<SearchBean.DataBean.DatasBean> list = bean.getData().getDatas();
+        final List<SearchBean.DataBean.DatasBean> list = bean.getData().getDatas();
         SearchAdapter searchAdapter = new SearchAdapter(list, SearchActivity.this);
         mRecycler.setAdapter(searchAdapter);
+        searchAdapter.setOnitemclick(new SearchAdapter.Onitemclick() {
+            @Override
+            public void Clickitem(int position) {
+                String apkLink = list.get(position).getApkLink();
+                Intent intent = new Intent(SearchActivity.this, SearchTextActivity.class);
+                intent.putExtra("linkurl",apkLink);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

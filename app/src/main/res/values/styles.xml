@@ -21,4 +21,28 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <!--将用于配置到特定的Activity上的样式-->
+    <style name="SplashStyle" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/white</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+
+    </style>
+
+
+
+    <style name="dark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="white" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="actionOverflowButtonStyle">@style/ToolbarOverflow</item>
+    </style>
+
+    <style name="ToolbarOverflow" parent="@android:style/Widget.ActionButton.Overflow">
+        <item name="android:src">@mipmap/option_menu</item>
+    </style>
 </resources>

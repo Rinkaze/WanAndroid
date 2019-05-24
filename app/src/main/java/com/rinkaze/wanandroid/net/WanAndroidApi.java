@@ -2,14 +2,18 @@ package com.rinkaze.wanandroid.net;
 
 import com.rinkaze.wanandroid.bean.KnowledgeHierarchyData;
 import com.rinkaze.wanandroid.bean.LoginInfo;
+import com.rinkaze.wanandroid.bean.MyCollectBean;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.bean.official.WxAuthor;
+
+import org.json.JSONObject;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -75,11 +79,18 @@ public interface WanAndroidApi {
     @GET("tree/json")
     Observable<KnowledgeHierarchyData> getKnowledgeHierarchyData();
 
+    @GET("lg/collect/list/{page}/json")
+    Observable<MyCollectBean> getCollectData(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("page")int page);
+	
+	//Navigation_收藏
+	@FormUrlEncoded
+	@POST("lg/collect/add/json")
+	Observable<JSONObject> getNaviLike(@Header("Cookie")String name,@Header("Cookie")String psw,@Field("title")String title, @Field("author")String author, @Field("link") String link);
+	
+	@POST("https://www.wanandroid.com/lg/{id}/json")
+    Observable<JSONObject> getKADelete(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("id")int id);
 
-    //Navigation_收藏
-    @FormUrlEncoded
-    @POST("lg/collect/addtool/json")
-    Observable<String> getNaviLike(@Field("name")String name,@Field("link") String link);
-
-
+	@FormUrlEncoded
+	@POST("lg/uncollect/{id}/json")
+    Observable<JSONObject> disCollect(@Path("id")int id, @Field("originId")int originId, @Header("Cookie")String name, @Header("Cookie")String psw);
 }

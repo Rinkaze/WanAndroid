@@ -17,14 +17,19 @@ import com.rinkaze.wanandroid.net.RxUtils;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.utils.SpUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.reactivex.disposables.Disposable;
 
 public class HomeModel extends BaseModel {
 
-    private String name;
     private String psw;
+    private String name;
 
     public void getHomeInit(int num, final ResultCallBack<HomeBean> resultCallBack){
+        psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
+        name = (String) SpUtil.getParam(Constants.USERNAME, "");
         HttpUtils.getInstance().getApiserver(EveryWhereApi.baseUrl,EveryWhereApi.class)
                 .getHomeInit(num)
                 .compose(RxUtils.<HomeBean>rxObserableSchedulerHelper())
@@ -77,15 +82,13 @@ public class HomeModel extends BaseModel {
 
     private static final String TAG = "HomeModel";
     public void getLike(int id, final ResultCallBack<String>resultCallBack){
-        name = (String) SpUtil.getParam(Constants.USERNAME, "");
-        psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
         HttpUtils.getInstance().getApiserver(EveryWhereApi.baseUrl,EveryWhereApi.class)
                 .getCollect(name,psw,id)
-                .compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+                .compose(RxUtils.<JSONObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JSONObject>() {
                     @Override
-                    public void onNext(String s) {
-                        resultCallBack.onSuccess(s);
+                    public void onNext(JSONObject s) {
+                        resultCallBack.onSuccess(s.toString());
                     }
 
                     @Override
@@ -100,21 +103,14 @@ public class HomeModel extends BaseModel {
                 });
     }
     public void getDisLike(int disid, final ResultCallBack<String>resultCallBack){
-        name = (String) SpUtil.getParam(Constants.USERNAME, "");
-        psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
         HttpUtils.getInstance().getApiserver(EveryWhereApi.baseUrl,EveryWhereApi.class)
                 .getDisCollect(name,psw,disid)
-                .compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+                .compose(RxUtils.<JSONObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JSONObject>() {
                     @Override
-                    public void onNext(String s) {
-                        if (!TextUtils.isEmpty(s)){
-                            CollectBean collectBean = new Gson().fromJson(s, CollectBean.class);
-                            if (collectBean.getErrorCode() == WanAndroidApi.SUCCESS_CODE){
-                                resultCallBack.onSuccess("");
-                            }else {
-                                resultCallBack.onFail(collectBean.getErrorMsg());
-                            }
+                    public void onNext(JSONObject s) {
+                        if (s != null){
+                            resultCallBack.onSuccess("");
                         }
                     }
 
@@ -125,11 +121,9 @@ public class HomeModel extends BaseModel {
 
                     @Override
                     protected void subscribe(Disposable d) {
-
+                        addDisposable(d);
                     }
                 });
     }
 
-    public static class SearchModel extends BaseModel {
-    }
 }

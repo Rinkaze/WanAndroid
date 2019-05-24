@@ -1,10 +1,12 @@
 package com.rinkaze.wanandroid.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.rinkaze.wanandroid.utils.UIModeUtil;
 import com.rinkaze.wanandroid.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -79,5 +81,9 @@ public abstract class BaseActivity<V extends BaseMvpView,P extends BasePresenter
         if (mLoadingDialog != null && mLoadingDialog.isShowing()){
             mLoadingDialog.dismiss();
         }
+    }
+
+    protected void setDaiNightMode(){
+        UIModeUtil.changeModeUI(this);
     }
 }

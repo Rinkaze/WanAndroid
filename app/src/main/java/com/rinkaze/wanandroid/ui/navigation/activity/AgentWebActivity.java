@@ -41,7 +41,8 @@ public class AgentWebActivity extends BaseActivity<NaviLikeView, NaviLikePresent
     TextView naviToolbarTitle;
     private AgentWeb mAgentWeb;
     private String link;
-
+    private String title;
+    private String author;
 
     @Override
     protected NaviLikePresenter initPresenter() {
@@ -58,6 +59,8 @@ public class AgentWebActivity extends BaseActivity<NaviLikeView, NaviLikePresent
     protected void initView() {
         super.initView();
         link = getIntent().getStringExtra("link");
+        title = getIntent().getStringExtra("title");
+        author = getIntent().getStringExtra("author");
 //        String title = getIntent().getStringExtra("title");
         naviToolbar.setTitle("");
         mAgentWeb = AgentWeb.with(this)//传入Activity
@@ -97,11 +100,11 @@ public class AgentWebActivity extends BaseActivity<NaviLikeView, NaviLikePresent
                 startActivity(Intent.createChooser(intent1, "Share to..."));
                 break;
             case 2:
-                boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
+                boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, true);
                 String name = (String) SpUtil.getParam(Constants.USERNAME, "");
 
-                if (param){
-                    mPresenter.initNaviLike(name,link);
+                if (param==true){
+                    mPresenter.initNaviLike(title,author,link);
                 }else {
                     startActivityForResult(new Intent(AgentWebActivity.this,LoginActivity.class),100);
                     ToastUtil.showShort("请先登录");
@@ -140,7 +143,7 @@ public class AgentWebActivity extends BaseActivity<NaviLikeView, NaviLikePresent
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == WanAndroidApi.SUCCESS_CODE){
-            mPresenter.initNaviLike((String) SpUtil.getParam(Constants.USERNAME, ""),link);
+            mPresenter.initNaviLike(title,author,link);
         }
     }
 }

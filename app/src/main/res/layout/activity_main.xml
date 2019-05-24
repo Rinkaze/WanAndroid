@@ -22,17 +22,19 @@
                 android:background="@color/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:titleTextColor="@color/white" >
+
+                <ImageView
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:src="@drawable/searc"
+                    android:id="@+id/search"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30" />
+
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
-        <ImageView
-            android:layout_marginTop="@dimen/dp_10"
-            android:src="@drawable/searc"
-            android:id="@+id/search"
-            android:layout_marginLeft="@dimen/dp_320"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30" />
-
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseFragment;
@@ -14,7 +15,10 @@ import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.presenter.KAPresenter;
 import com.rinkaze.wanandroid.ui.knowledge.activity.KnowledgeWebActivity;
 import com.rinkaze.wanandroid.ui.knowledge.adapter.KAViewAdapter;
+import com.rinkaze.wanandroid.ui.main.activity.LoginActivity;
 import com.rinkaze.wanandroid.utils.Logger;
+import com.rinkaze.wanandroid.utils.SpUtil;
+import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.view.KAView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -32,8 +36,8 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
     RecyclerView mReview;
     @BindView(R.id.smartrefreshlayout)
     SmartRefreshLayout mSmartrefreshlayout;
-    private int pag=1;
-    private List<FeedArticleListData.DataBean.DatasBean> mList=new ArrayList<>();
+    private int pag = 0;
+    private List<FeedArticleListData.DataBean.DatasBean> mList = new ArrayList<>();
     private KAViewAdapter mAdapter;
     private int cid;
 
@@ -49,27 +53,61 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
 
     @Override
     public void KAData(final FeedArticleListData data) {
+        mSmartrefreshlayout.finishLoadMore();
+        mSmartrefreshlayout.finishRefresh();
+        if (pag == 0){
+            mList.clear();
+        }
         final List<FeedArticleListData.DataBean.DatasBean> datas = data.getData().getDatas();
         mList.addAll(datas);
         mAdapter.setmList(mList);
 
-        mSmartrefreshlayout.finishLoadMore();
-        mSmartrefreshlayout.finishRefresh();
 
         mAdapter.setOnKAClick(new KAViewAdapter.onKAClick() {
             @Override
             public void setonKAItemClick(FeedArticleListData.DataBean.DatasBean datasBean, int postion) {
-                Intent intent = new Intent(getContext(),KnowledgeWebActivity.class);
-                intent.putExtra(Constants.EMAIL,datas.get(postion).getLink());
-                intent.putExtra(Constants.DATA,datas.get(postion).getTitle());
+                Intent intent = new Intent(getContext(), KnowledgeWebActivity.class);
+                intent.putExtra(Constants.EMAIL, datasBean.getLink());
+                intent.putExtra(Constants.DATA, datasBean.getTitle());
+                intent.putExtra(Constants.DESC,datasBean.getAuthor());
                 startActivity(intent);
+            }
+        });
+
+        mAdapter.setLike(new KAViewAdapter.OnItenClickListener() {
+            @Override
+            public void like(int id) {
+                boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
+                if (param){
+                    mPresenter.initCollectData(id);
+                }else {
+                    startActivityForResult(new Intent(getContext(),LoginActivity.class),100);
+                    ToastUtil.showShort("请先登录");
+                }
+            }
+            @Override
+            public void remove(int id) {
+                mPresenter.initDeleteData(id);
+                ToastUtil.showLong("取消收藏");
             }
         });
     }
 
     @Override
     public void ErrorData(String e) {
-        Logger.logD(TAG,e);
+        mSmartrefreshlayout.finishLoadMore();
+        mSmartrefreshlayout.finishRefresh();
+        Logger.logD(TAG, e);
+    }
+
+    @Override
+    public void KACancelData(String s) {
+        ToastUtil.showLong(s);
+    }
+
+    @Override
+    public void KACollectData(String s) {
+        ToastUtil.showShort(s);
     }
 
     @Override
@@ -78,33 +116,28 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
         cid = arguments.getInt(Constants.DATA);
         mPresenter.initPresenter(pag, cid);
         mReview.setLayoutManager(new LinearLayoutManager(getContext()));
-        mReview.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        mReview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         mAdapter = new KAViewAdapter(getContext(), mList);
         mReview.setAdapter(mAdapter);
-
-
-        mSmartrefreshlayout.setEnableLoadMore(true);
-        mSmartrefreshlayout.setEnableRefresh(true);
     }
 
     @Override
     protected void initData() {
+        mPresenter.initPresenter(pag, cid);
         mSmartrefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-               pag++;
-               mPresenter.initPresenter(pag,cid);
-               mAdapter.notifyDataSetChanged();
+                //加载
+                pag++;
+                mPresenter.initPresenter(pag, cid);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                pag=0;
-                mPresenter.initPresenter(pag,cid);
-                mAdapter.notifyDataSetChanged();
+                //刷新
+                pag = 0;
+                mPresenter.initPresenter(pag, cid);
             }
         });
-
-
     }
 }
