@@ -12,7 +12,7 @@
         android:id="@+id/pro_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_58"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
        >
         <ImageView
             android:layout_width="@dimen/dp_25"

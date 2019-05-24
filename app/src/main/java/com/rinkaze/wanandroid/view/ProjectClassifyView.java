@@ -7,5 +7,6 @@ import com.rinkaze.wanandroid.bean.ProjectListBean;
 public interface ProjectClassifyView extends BaseMvpView {
 
     void setData(ProjectListBean bean);
-
+    void onCollectSucceed(String bean);
+    void onCollectFalse(String msg2);
 }
