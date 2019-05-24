@@ -62,7 +62,8 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
     public void onSuccess(LoginInfo loginInfo) {
         hideLoading();
         //保存用户信息，并将登录状态标记为已登录
-        SpUtil.setParam(Constants.USERNAME, loginInfo.getData().getUsername());
+        SpUtil.setParam(Constants.NAME, loginInfo.getData().getUsername());
+        SpUtil.setParam(Constants.USERNAME, "loginUserName="+loginInfo.getData().getUsername());
         SpUtil.setParam(Constants.TOKEN, loginInfo.getData().getId());
         SpUtil.setParam(Constants.LOGIN, true);
         setResult(WanAndroidApi.SUCCESS_CODE);
@@ -95,7 +96,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                 String psw = mEtPsw.getText().toString().trim();
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(psw)){
                     mPresenter.login(name,psw);
-                    SpUtil.setParam(Constants.PASSWORD,psw);
+                    SpUtil.setParam(Constants.PASSWORD,"loginUserPassword="+psw);
                     showLoading();
                 }else {
                     ToastUtil.showShort("用户名或密码不能为空");

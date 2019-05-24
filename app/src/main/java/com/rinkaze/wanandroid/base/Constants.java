@@ -38,4 +38,5 @@ public interface Constants {
     String PHOTO = "photo";
     String TYPE = "type";
     String PASSWORD = "password";
+    String NAME = "name";
 }

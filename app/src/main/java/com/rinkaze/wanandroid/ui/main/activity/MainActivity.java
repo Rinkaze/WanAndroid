@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         tvLogin = headerView.findViewById(R.id.tv_login);
         //判断如果用户已经登陆过，直接显示用户名
         if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
-            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
+            tvLogin.setText((String)SpUtil.getParam(Constants.NAME,"登录"));
         }
         tvLogin.setOnClickListener(this);
 
@@ -244,10 +244,11 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                             new LoginModel().logout(new ResultCallBack<LoginInfo>() {
                                 @Override
                                 public void onSuccess(LoginInfo bean) {
-                                    SpUtil.setParam(Constants.USERNAME,"登录");
+                                    SpUtil.setParam(Constants.NAME,"登录");
                                     SpUtil.setParam(Constants.TOKEN,0);
                                     SpUtil.setParam(Constants.LOGIN,false);
                                     SpUtil.setParam(Constants.PASSWORD,"");
+                                    SpUtil.setParam(Constants.USERNAME,"");
                                     tvLogin.setText(R.string.login);
                                     ToastUtil.showShort("已退出登录");
                                     hideLoading();
@@ -297,7 +298,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     protected void onResume() {
         super.onResume();
         if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
-            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
+            tvLogin.setText((String)SpUtil.getParam(Constants.NAME,"登录"));
         }
     }
 
@@ -305,7 +306,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == WanAndroidApi.SUCCESS_CODE){
-            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
+            tvLogin.setText((String)SpUtil.getParam(Constants.NAME,"登录"));
         }
     }
 }
