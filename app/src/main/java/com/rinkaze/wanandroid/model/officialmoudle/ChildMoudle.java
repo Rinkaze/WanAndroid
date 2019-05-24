@@ -44,14 +44,13 @@ public class ChildMoudle extends BaseModel {
     public void getCollect(int id, final ResultCallBack<String> callBack) {
         WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
         apiserver.getCollect(id)
-                .compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+                .compose(RxUtils.<JSONObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JSONObject>() {
 
 
                     @Override
-                    public void onNext(String s) {
+                    public void onNext(JSONObject jsonObject) {
                         try {
-                            JSONObject jsonObject = new JSONObject(s);
                             int errorCode = jsonObject.getInt("errorCode");
                             Log.e(TAG, "onNext: " + errorCode);
                             if (errorCode == WanAndroidApi.SUCCESS_CODE) {
@@ -83,12 +82,11 @@ public class ChildMoudle extends BaseModel {
     public void getDisCollect(int id, int originId, final ResultCallBack<String> callBack) {
         WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
         apiserver.disCollect(id,originId)
-                .compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+                .compose(RxUtils.<JSONObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JSONObject>() {
                     @Override
-                    public void onNext(String s) {
+                    public void onNext(JSONObject jsonObject) {
                         try {
-                            JSONObject jsonObject = new JSONObject(s);
                             int errorCode = jsonObject.getInt("errorCode");
                             Log.e(TAG, "onNext: " + errorCode);
                             if (errorCode == WanAndroidApi.SUCCESS_CODE) {

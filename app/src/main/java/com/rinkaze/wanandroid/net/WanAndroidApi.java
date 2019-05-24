@@ -1,10 +1,13 @@
 package com.rinkaze.wanandroid.net;
 
+import com.google.gson.JsonObject;
 import com.rinkaze.wanandroid.bean.KnowledgeHierarchyData;
 import com.rinkaze.wanandroid.bean.LoginInfo;
 import com.rinkaze.wanandroid.bean.MyCollectBean;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.bean.official.WxAuthor;
+
+import org.json.JSONObject;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -90,8 +93,8 @@ public interface WanAndroidApi {
 
 	@FormUrlEncoded
 	@POST("lg/uncollect/{id}/json")
-    Observable<String> disCollect(@Path("id")int id,@Field("originId")int originId);
+    Observable<JSONObject> disCollect(@Path("id")int id,@Field("originId")int originId);
 
 	@POST("lg/collect/{id}/json")
-    Observable<String> getCollect(@Path("id")int id);
+    Observable<JSONObject> getCollect(@Path("id")int id);
 }
