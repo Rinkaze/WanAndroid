@@ -47,25 +47,23 @@ public class OfficialChildAdapter extends RecyclerView.Adapter<OfficialChildAdap
             @Override
             public void onClick(View view) {
                 if (list.get(i) != null) {
-                    if (list.get(i).isFresh()) {
+                    if (list.get(i).isCollect()) {
                         like.remove(list.get(i).getId());
                         Glide.with(context)
                                 .load(R.mipmap.follow_unselected)
                                 .into(viewHolder.ivCollect);
-                        list.get(i).setFresh(false);
+                        list.get(i).setCollect(false);
 
                     } else {
                         like.setLike(list.get(i).getId());
                         Glide.with(context)
                                 .load(R.mipmap.follow)
                                 .into(viewHolder.ivCollect);
-                        list.get(i).setFresh(true);
+                        list.get(i).setCollect(true);
                     }
-
                 }
             }
         });
-
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +71,8 @@ public class OfficialChildAdapter extends RecyclerView.Adapter<OfficialChildAdap
                 click.setClick(view,i);
             }
         });
+
+
 
 
 //        if (list.get(position)!=null){
@@ -129,15 +129,11 @@ public class OfficialChildAdapter extends RecyclerView.Adapter<OfficialChildAdap
     public void setClick(setOnClick click) {
         this.click = click;
     }
-
     public interface setClickLike {
         void setLike(int position);
         void remove(int id);
-
     }
-
     public void setLike(setClickLike like) {
         this.like = like;
     }
-
 }

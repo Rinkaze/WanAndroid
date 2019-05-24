@@ -28,9 +28,7 @@ public interface Constants {
 
     String PATH_CACHE = PATH_DATA + "/NetCache";
     String DATA = "data";
-
     String LOGIN = "login";
-
     String TOKEN = "token";
     String DESC = "desc";
     String USERNAME = "username";
