@@ -236,6 +236,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                         break;
                     case R.id.nav_about:
                         //关于我们
+                        startActivity(new Intent(MainActivity.this,MyActivity.class));
                         break;
                     case R.id.nav_logout:
                         //退出登录
