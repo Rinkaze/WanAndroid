@@ -5,11 +5,13 @@ import com.rinkaze.wanandroid.base.BasePresenter;
 import com.rinkaze.wanandroid.bean.ProjectListBean;
 import com.rinkaze.wanandroid.model.ProjectClassifyModel;
 import com.rinkaze.wanandroid.net.ResultCallBack;
+import com.rinkaze.wanandroid.utils.SpUtil;
 import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.view.ProjectClassifyView;
 
 public class ProjectClassPresenter extends BasePresenter<ProjectClassifyView> {
-
+    private boolean isselect=true;
+    private boolean isselectfain=false;
     private ProjectClassifyModel mProjectClassifyModel;
 //初始化Modle
     @Override
@@ -37,20 +39,22 @@ public class ProjectClassPresenter extends BasePresenter<ProjectClassifyView> {
         mProjectClassifyModel.getLike(id, new ResultCallBack<String>() {
             @Override
             public void onSuccess(String bean) {
-                mMvpView.onCollectSucceed("已收藏");
+                mMvpView.onCollectSucceed(bean);
+                SpUtil.setParam("isselect",isselect);
             }
 
             @Override
             public void onFail(String msg) {
                 mMvpView.onCollectFalse(msg);
-            }
+                SpUtil.setParam("isselectfain",isselectfain);
+        }
         });
     }
     public void Dislike(int disid){
         mProjectClassifyModel.getDisLike(disid, new ResultCallBack<String>() {
             @Override
             public void onSuccess(String bean) {
-                mMvpView.onCollectSucceed("已取消收藏");
+                mMvpView.onCollectSucceed(bean);
             }
 
             @Override
