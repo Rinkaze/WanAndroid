@@ -37,6 +37,7 @@ import com.rinkaze.wanandroid.ui.main.fragment.MainFragment;
 import com.rinkaze.wanandroid.ui.navigation.fragment.NaviFragment;
 import com.rinkaze.wanandroid.ui.official.fragment.OfficialFragment;
 import com.rinkaze.wanandroid.ui.project.fragment.ProjectFragment;
+import com.rinkaze.wanandroid.ui.todo.activity.ToDoActivity;
 import com.rinkaze.wanandroid.utils.SpUtil;
 import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.utils.UIModeUtil;
@@ -225,7 +226,8 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                         }
                         break;
                     case R.id.nav_todo:
-                        //TODO
+                        Intent intent = new Intent(MainActivity.this, ToDoActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.nav_night:
                         //夜间模式
@@ -253,7 +255,6 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                                     ToastUtil.showShort("已退出登录");
                                     hideLoading();
                                 }
-
                                 @Override
                                 public void onFail(String msg) {
                                     ToastUtil.showShort(msg);

@@ -103,7 +103,7 @@ public class AgentWebActivity extends BaseActivity<NaviLikeView, NaviLikePresent
                 boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, true);
                 String name = (String) SpUtil.getParam(Constants.USERNAME, "");
 
-                if (param==true){
+                if (param){
                     mPresenter.initNaviLike(title,author,link);
                 }else {
                     startActivityForResult(new Intent(AgentWebActivity.this,LoginActivity.class),100);
