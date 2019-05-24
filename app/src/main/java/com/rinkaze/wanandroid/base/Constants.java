@@ -37,4 +37,6 @@ public interface Constants {
     String EMAIL = "email";
     String PHOTO = "photo";
     String TYPE = "type";
+    String PASSWORD = "password";
+    String NAME = "name";
 }

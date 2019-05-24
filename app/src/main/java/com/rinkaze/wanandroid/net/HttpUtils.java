@@ -74,8 +74,6 @@ public class HttpUtils {
                 .connectTimeout(10, TimeUnit.SECONDS)
                 //设置错误重连
                 .retryOnConnectionFailure(true);
-        builder.addInterceptor(new AddCookiesInterceptor(BaseApp.getInstance()));
-        builder.addInterceptor(new SaveCookiesInterceptor(BaseApp.getInstance()));
         if (Constants.isDebug){
             builder.addInterceptor(new LoggingInterceptor());
         }

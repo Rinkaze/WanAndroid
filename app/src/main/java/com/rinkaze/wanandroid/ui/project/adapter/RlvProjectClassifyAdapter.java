@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rinkaze.wanandroid.R;
+import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.ProjectListBean;
 import com.rinkaze.wanandroid.utils.GlideUtil;
+import com.rinkaze.wanandroid.utils.SpUtil;
 import com.rinkaze.wanandroid.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -22,10 +24,14 @@ public class RlvProjectClassifyAdapter extends RecyclerView.Adapter {
     private ArrayList<ProjectListBean.DataBean.DatasBean> mList;
     private OnItemClickListener mListener;
     private ProjectListBean.DataBean.DatasBean datasBean;
-
+    private int num;
     public RlvProjectClassifyAdapter(FragmentActivity activity, ArrayList<ProjectListBean.DataBean.DatasBean> list) {
         this.mContext = activity;
         this.mList = list;
+    }
+
+    public void setmList(ArrayList<ProjectListBean.DataBean.DatasBean> mList) {
+        this.mList = mList;
     }
 
     @NonNull
@@ -44,37 +50,38 @@ public class RlvProjectClassifyAdapter extends RecyclerView.Adapter {
         String desc = datasBean.getDesc();
         String author = datasBean.getAuthor();
         String niceDate = datasBean.getNiceDate();
-        GlideUtil.loadImage(R.mipmap.ic_launcher, envelopePic, viewHolders.mIv, mContext);
-
         GlideUtil.loadImage(R.mipmap.zhanweitu_home_kapian_hdpi, envelopePic, viewHolders.mIv, mContext);
 
-        if (datasBean.isCollect()) {
-            GlideUtil.loadImage(R.mipmap.zhanweitu_home_kapian_hdpi,
-                    R.mipmap.project_follow_hong, viewHolders.mCollect, mContext);
-        } else {
-            GlideUtil.loadImage(R.mipmap.zhanweitu_home_kapian_hdpi, R.mipmap.project_follow, viewHolders.mCollect, mContext);
-        }
         viewHolders.mTitles.setText(title);
         viewHolders.mSizetitle.setText(desc);
         viewHolders.mYingwen.setText(author);
         viewHolders.mTime.setText(niceDate);
+
+        //webview
+        viewHolders.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onItemClick(datasBean.getLink(),datasBean.getTitle(),datasBean.getAuthor(), i);
+                }
+            }
+        });
+        //小心心
         viewHolders.mCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (datasBean.isCollect()) {
-                    if (onFollowCliclListener != null) {
-                        ToastUtil.showShort("已取消关注");
-                        onFollowCliclListener.cancelFollow(datasBean.getId());
-                        Glide.with(mContext).load(R.mipmap.project_follow).into(viewHolders.mCollect);
+                    if ((boolean) SpUtil.getParam(Constants.LOGIN, false)) {
+                        Glide.with(mContext).load(R.mipmap.follow_unselected).into(viewHolders.mCollect);
                         datasBean.setCollect(false);
                     }
+                    onItemUrl.setDislike(num);
                 } else {
-                    if (onFollowCliclListener != null) {
-                        ToastUtil.showShort("已关注");
-                        onFollowCliclListener.onFollow(datasBean.getId());
-                        Glide.with(mContext).load(R.mipmap.project_follow_hong).into(viewHolders.mCollect);
+                    if ((boolean) SpUtil.getParam(Constants.LOGIN, false)) {
+                        Glide.with(mContext).load(R.mipmap.follow).into(viewHolders.mCollect);
                         datasBean.setCollect(true);
                     }
+                    onItemUrl.setLike(num);
                 }
             }
         });
@@ -105,7 +112,6 @@ public class RlvProjectClassifyAdapter extends RecyclerView.Adapter {
 
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
-
             mIv = itemView.findViewById(R.id.project_img);
             mTitles = itemView.findViewById(R.id.project_title);
             mSizetitle = itemView.findViewById(R.id.project_name);
@@ -115,27 +121,24 @@ public class RlvProjectClassifyAdapter extends RecyclerView.Adapter {
 
         }
     }
-
     //接口回调
     //1.写个接口
     public interface OnItemClickListener {
         void onItemClick(String link,String title,String author, int position);
 
     }
-
     //2.写个方法,将OnItemClickListener设置到Adapter中
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
-    private RlvProjectClassifyAdapter.OnFollowCliclListener onFollowCliclListener;
+    private OnItemUrl onItemUrl;
 
-    public void setOnFollowCliclListener(RlvProjectClassifyAdapter.OnFollowCliclListener onFollowCliclListener) {
-        this.onFollowCliclListener = onFollowCliclListener;
+    public void setOnItemUrl(OnItemUrl onItemUrl) {
+        this.onItemUrl = onItemUrl;
     }
+    public interface OnItemUrl {
+        void setLike(int position);
 
-    public interface OnFollowCliclListener {
-        void onFollow(int id);
-
-        void cancelFollow(int id);
+        void setDislike(int id);
     }
 }

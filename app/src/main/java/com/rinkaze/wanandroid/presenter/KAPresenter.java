@@ -43,4 +43,18 @@ public class KAPresenter extends BasePresenter<KAView> {
             }
         });
     }
+
+    public void initCollectData(int id){
+        model.initCollectData(id, new ResultCallBack<String>() {
+            @Override
+            public void onSuccess(String bean) {
+                mMvpView.KACollectData(bean);
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mMvpView.ErrorData(msg);
+            }
+        });
+    }
 }

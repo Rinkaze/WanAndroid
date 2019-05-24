@@ -33,6 +33,32 @@ public class ProjectClassPresenter extends BasePresenter<ProjectClassifyView> {
             }
         });
     }
+    public void Like(int id){
+        mProjectClassifyModel.getLike(id, new ResultCallBack<String>() {
+            @Override
+            public void onSuccess(String bean) {
+                mMvpView.onCollectSucceed("已收藏");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mMvpView.onCollectFalse(msg);
+            }
+        });
+    }
+    public void Dislike(int disid){
+        mProjectClassifyModel.getDisLike(disid, new ResultCallBack<String>() {
+            @Override
+            public void onSuccess(String bean) {
+                mMvpView.onCollectSucceed("已取消收藏");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                mMvpView.onCollectFalse(msg);
+            }
+        });
+    }
 
 
 }

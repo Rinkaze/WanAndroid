@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseActivity;
+import com.rinkaze.wanandroid.base.BaseApp;
 import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.LoginInfo;
 import com.rinkaze.wanandroid.model.LoginModel;
@@ -106,7 +107,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         tvLogin = headerView.findViewById(R.id.tv_login);
         //判断如果用户已经登陆过，直接显示用户名
         if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
-            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
+            tvLogin.setText((String)SpUtil.getParam(Constants.NAME,"登录"));
         }
         tvLogin.setOnClickListener(this);
 
@@ -216,14 +217,19 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                 switch (menuItem.getItemId()) {
                     case R.id.nav_collect:
                         //收藏
-                        startActivity(new Intent(MainActivity.this,CollectActivity.class));
+                        if ((boolean)SpUtil.getParam(Constants.LOGIN,false)) {
+                            startActivity(new Intent(MainActivity.this, CollectActivity.class));
+                        }else {
+                            ToastUtil.showShort("请先登录");
+                            startActivityForResult(new Intent(MainActivity.this,LoginActivity.class),100);
+                        }
                         break;
                     case R.id.nav_todo:
                         //TODO
                         break;
                     case R.id.nav_night:
                         //夜间模式
-                        UIModeUtil.changeModeUI(MainActivity.this);
+                        setDaiNightMode();
                         break;
                     case R.id.nav_setting:
                         //设置
@@ -238,9 +244,11 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                             new LoginModel().logout(new ResultCallBack<LoginInfo>() {
                                 @Override
                                 public void onSuccess(LoginInfo bean) {
-                                    SpUtil.setParam(Constants.USERNAME,"登录");
+                                    SpUtil.setParam(Constants.NAME,"登录");
                                     SpUtil.setParam(Constants.TOKEN,0);
                                     SpUtil.setParam(Constants.LOGIN,false);
+                                    SpUtil.setParam(Constants.PASSWORD,"");
+                                    SpUtil.setParam(Constants.USERNAME,"");
                                     tvLogin.setText(R.string.login);
                                     ToastUtil.showShort("已退出登录");
                                     hideLoading();
@@ -290,7 +298,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     protected void onResume() {
         super.onResume();
         if ((boolean)SpUtil.getParam(Constants.LOGIN,false)){
-            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
+            tvLogin.setText((String)SpUtil.getParam(Constants.NAME,"登录"));
         }
     }
 
@@ -298,7 +306,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == WanAndroidApi.SUCCESS_CODE){
-            tvLogin.setText((String)SpUtil.getParam(Constants.USERNAME,"登录"));
+            tvLogin.setText((String)SpUtil.getParam(Constants.NAME,"登录"));
         }
     }
 }

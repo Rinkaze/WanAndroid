@@ -36,7 +36,7 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
     private RecCollectAdapter adapter;
     private int page = 0;
     private ArrayList<MyCollectBean.DataEntity.DatasEntity> list;
-    private int position;
+    private int mPosition;
 
     @Override
     protected CollectPresenter initPresenter() {
@@ -61,8 +61,9 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
 
     @Override
     public void disCollect(String msg) {
-        list.remove(position);
+        list.remove(mPosition);
         adapter.setList(list);
+        ToastUtil.showShort("已取消收藏");
     }
 
     @Override
@@ -107,8 +108,12 @@ public class CollectActivity extends BaseActivity<CollectView, CollectPresenter>
         adapter.setOnCollectListener(new RecCollectAdapter.OnCollectListener() {
             @Override
             public void disCollect(int position) {
-                CollectActivity.this.position = position;
-                mPresenter.disCollect(list.get(position).getId(),list.get(position).getOriginId());
+                mPosition = position;
+                int oId = -1;
+                if (list.get(position).getOriginId() != 0){
+                    oId = list.get(position).getOriginId();
+                }
+                mPresenter.disCollect(list.get(position).getId(),oId);
             }
         });
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {

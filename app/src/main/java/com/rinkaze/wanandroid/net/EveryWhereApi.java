@@ -4,6 +4,8 @@ package com.rinkaze.wanandroid.net;
 import com.rinkaze.wanandroid.bean.HomeBanner;
 import com.rinkaze.wanandroid.bean.HomeBean;
 
+import org.json.JSONObject;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
@@ -22,10 +24,10 @@ public interface EveryWhereApi {
     Observable<HomeBanner> getBanninit();
 
     @POST("lg/collect/{id}/json")
-    Observable<String> getCollect(@Path("id") int id);
+    Observable<JSONObject> getCollect(@Header("Cookie")String name, @Header("Cookie")String psw, @Path("id") int id);
 
     @POST("lg/uncollect_originId/{disid}/json")
-    Observable<String> getDisCollect(@Path("disid") int disid);
+    Observable<JSONObject> getDisCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("disid") int disid);
 
 
 }
