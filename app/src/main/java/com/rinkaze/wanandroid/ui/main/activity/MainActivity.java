@@ -229,7 +229,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                         break;
                     case R.id.nav_night:
                         //夜间模式
-                        UIModeUtil.changeModeUI(getContext());
+                        setDaiNightMode();
                         break;
                     case R.id.nav_setting:
                         //设置

@@ -6,6 +6,8 @@ import com.rinkaze.wanandroid.bean.MyCollectBean;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.bean.official.WxAuthor;
 
+import org.json.JSONObject;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
@@ -83,12 +85,12 @@ public interface WanAndroidApi {
 	//Navigation_收藏
 	@FormUrlEncoded
 	@POST("lg/collect/add/json")
-	Observable<String> getNaviLike(@Header("Cookie")String name,@Header("Cookie")String psw,@Field("title")String title, @Field("author")String author, @Field("link") String link);
+	Observable<JSONObject> getNaviLike(@Header("Cookie")String name,@Header("Cookie")String psw,@Field("title")String title, @Field("author")String author, @Field("link") String link);
 	
 	@POST("https://www.wanandroid.com/lg/{id}/json")
-    Observable<String> getKADelete(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("id")int id);
+    Observable<JSONObject> getKADelete(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("id")int id);
 
 	@FormUrlEncoded
 	@POST("lg/uncollect/{id}/json")
-    Observable<String> disCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("id")int id,@Field("originId")int originId);
+    Observable<JSONObject> disCollect(@Path("id")int id, @Field("originId")int originId, @Header("Cookie")String name, @Header("Cookie")String psw);
 }

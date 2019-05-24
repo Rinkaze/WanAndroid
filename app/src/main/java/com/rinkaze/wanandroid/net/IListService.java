@@ -4,6 +4,8 @@ import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.bean.ProjectClassBean;
 import com.rinkaze.wanandroid.bean.ProjectListBean;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import io.reactivex.Completable;
@@ -41,8 +43,8 @@ public interface IListService {
     Observable<ProjectListBean> getProjectListData(@Path("page") int page,@Query("cid") int cid);
     //收藏
     @POST("lg/collect/{id}/json")
-    Observable<String> getCollect(@Header("Cookie")String name, @Header("Cookie")String psw, @Path("id") int id);
+    Observable<JSONObject> getCollect(@Header("Cookie")String name, @Header("Cookie")String psw, @Path("id") int id);
 
     @POST("lg/uncollect_originId/{disid}/json")
-    Observable<String> getDisCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("disid") int disid);
+    Observable<JSONObject> getDisCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("disid") int disid);
 }

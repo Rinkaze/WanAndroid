@@ -36,7 +36,7 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
     RecyclerView mReview;
     @BindView(R.id.smartrefreshlayout)
     SmartRefreshLayout mSmartrefreshlayout;
-    private int pag = 1;
+    private int pag = 0;
     private List<FeedArticleListData.DataBean.DatasBean> mList = new ArrayList<>();
     private KAViewAdapter mAdapter;
     private int cid;
@@ -53,6 +53,11 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
 
     @Override
     public void KAData(final FeedArticleListData data) {
+        mSmartrefreshlayout.finishLoadMore();
+        mSmartrefreshlayout.finishRefresh();
+        if (pag == 0){
+            mList.clear();
+        }
         final List<FeedArticleListData.DataBean.DatasBean> datas = data.getData().getDatas();
         mList.addAll(datas);
         mAdapter.setmList(mList);
@@ -74,7 +79,7 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
             public void like(int id) {
                 boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
                 if (param){
-                    ToastUtil.showLong("已收藏");
+                    mPresenter.initCollectData(id);
                 }else {
                     startActivityForResult(new Intent(getContext(),LoginActivity.class),100);
                     ToastUtil.showShort("请先登录");
@@ -90,6 +95,8 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
 
     @Override
     public void ErrorData(String e) {
+        mSmartrefreshlayout.finishLoadMore();
+        mSmartrefreshlayout.finishRefresh();
         Logger.logD(TAG, e);
     }
 
@@ -97,6 +104,12 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
     public void KACancelData(String s) {
         ToastUtil.showLong(s);
     }
+
+    @Override
+    public void KACollectData(String s) {
+        ToastUtil.showShort(s);
+    }
+
     @Override
     protected void initView() {
         Bundle arguments = getArguments();
@@ -110,27 +123,21 @@ public class KAFragment extends BaseFragment<KAView, KAPresenter> implements KAV
 
     @Override
     protected void initData() {
+        mPresenter.initPresenter(pag, cid);
         mSmartrefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 //加载
                 pag++;
                 mPresenter.initPresenter(pag, cid);
-                mAdapter.notifyDataSetChanged();
-                refreshLayout.finishLoadMore();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 //刷新
+                pag = 0;
                 mPresenter.initPresenter(pag, cid);
-                mAdapter.notifyDataSetChanged();
-                refreshLayout.finishRefresh();
             }
         });
-        mSmartrefreshlayout.setEnableLoadMore(true);
-        mSmartrefreshlayout.setEnableRefresh(true);
-        mSmartrefreshlayout.finishLoadMore();
-        mSmartrefreshlayout.finishRefresh();
     }
 }

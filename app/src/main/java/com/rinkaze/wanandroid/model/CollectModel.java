@@ -60,9 +60,9 @@ public class CollectModel extends BaseModel {
 
     public void disCollect(int id, int originId, final ResultCallBack<String> resultCallBack) {
         HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl,WanAndroidApi.class)
-                .disCollect(name,psw,id,originId)
-                .compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+                .disCollect(id,originId,name,psw)
+                .compose(RxUtils.<JSONObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JSONObject>() {
                     @Override
                     public void error(String msg) {
                         Log.e(TAG, "error: e="+msg );
@@ -74,19 +74,9 @@ public class CollectModel extends BaseModel {
                     }
 
                     @Override
-                    public void onNext(String s) {
-                        if (!TextUtils.isEmpty(s)){
-                            try {
-                                JSONObject jsonObject = new JSONObject(s);
-                                int code = jsonObject.getInt("errorCode");
-                                if (code == WanAndroidApi.SUCCESS_CODE){
-                                    resultCallBack.onSuccess("已取消收藏");
-                                }else {
-                                    resultCallBack.onFail(jsonObject.getString("errorMsg"));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                    public void onNext(JSONObject jsonObject) {
+                        if (jsonObject != null){
+                            resultCallBack.onSuccess("已取消收藏");
                         }
                     }
                 });

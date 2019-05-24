@@ -24,31 +24,23 @@ public class NaviLikeModel extends BaseModel {
     private String psw;
     private String userName;
 
-    public void initNaviLike(String name,String author, String link, final ResultCallBack<String> resultCallBack){
+    public void initNaviLike(String name, String author, String link, final ResultCallBack<String> resultCallBack) {
         psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
         userName = (String) SpUtil.getParam(Constants.USERNAME, "");
         WanAndroidApi apiserver = HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl, WanAndroidApi.class);
-        Observable<String> naviLike = apiserver.getNaviLike(userName,psw,name,author,link);
-        naviLike.compose(RxUtils.<String>rxObserableSchedulerHelper())
-                .subscribe(new BaseObserver<String>() {
+        Observable<JSONObject> naviLike = apiserver.getNaviLike(userName, psw, name, author, link);
+        naviLike.compose(RxUtils.<JSONObject>rxObserableSchedulerHelper())
+                .subscribe(new BaseObserver<JSONObject>() {
                     @Override
-                    public void onNext(String s) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(s);
-                            int errorCode = jsonObject.getInt("errorCode");
-                            if (errorCode==WanAndroidApi.SUCCESS_CODE){
-                                resultCallBack.onSuccess("收藏成功");
-                            }else{
-                                resultCallBack.onFail(jsonObject.getString("errorMsg"));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onNext(JSONObject s) {
+                        resultCallBack.onSuccess("收藏成功");
                     }
+
                     @Override
                     public void error(String msg) {
-                        Log.e(TAG, "error: e="+msg );
+                        Log.e(TAG, "error: e=" + msg);
                     }
+
                     @Override
                     protected void subscribe(Disposable d) {
                         addDisposable(d);
