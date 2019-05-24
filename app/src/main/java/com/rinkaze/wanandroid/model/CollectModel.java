@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.rinkaze.wanandroid.base.BaseModel;
+import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.MyCollectBean;
 import com.rinkaze.wanandroid.net.BaseObserver;
 import com.rinkaze.wanandroid.net.HttpUtils;
@@ -11,6 +12,7 @@ import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.RxUtils;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.utils.Logger;
+import com.rinkaze.wanandroid.utils.SpUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,10 +25,14 @@ import io.reactivex.disposables.Disposable;
 
 public class CollectModel extends BaseModel {
     private static final String TAG = "CollectModel";
+    private String psw;
+    private String name;
 
     public void getCollectData(int page, final ResultCallBack<MyCollectBean> callBack){
+        psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
+        name = (String) SpUtil.getParam(Constants.USERNAME, "");
         HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl,WanAndroidApi.class)
-                .getCollectData(page)
+                .getCollectData(name, psw,page)
                 .compose(RxUtils.<MyCollectBean>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<MyCollectBean>() {
                     @Override
@@ -54,7 +60,7 @@ public class CollectModel extends BaseModel {
 
     public void disCollect(int id, int originId, final ResultCallBack<String> resultCallBack) {
         HttpUtils.getInstance().getApiserver(WanAndroidApi.baseUrl,WanAndroidApi.class)
-                .disCollect(id,originId)
+                .disCollect(name,psw,id,originId)
                 .compose(RxUtils.<String>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<String>() {
                     @Override

@@ -241,6 +241,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                                     SpUtil.setParam(Constants.USERNAME,"登录");
                                     SpUtil.setParam(Constants.TOKEN,0);
                                     SpUtil.setParam(Constants.LOGIN,false);
+                                    SpUtil.setParam(Constants.PASSWORD,"");
                                     tvLogin.setText(R.string.login);
                                     ToastUtil.showShort("已退出登录");
                                     hideLoading();

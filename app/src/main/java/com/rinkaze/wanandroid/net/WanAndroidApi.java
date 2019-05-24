@@ -11,6 +11,7 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -77,17 +78,17 @@ public interface WanAndroidApi {
     Observable<KnowledgeHierarchyData> getKnowledgeHierarchyData();
 
     @GET("lg/collect/list/{page}/json")
-    Observable<MyCollectBean> getCollectData(@Path("page")int page);
+    Observable<MyCollectBean> getCollectData(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("page")int page);
 	
 	//Navigation_收藏
 	@FormUrlEncoded
 	@POST("lg/collect/add/json")
-	Observable<String> getNaviLike(@Field("title")String title,@Field("author")String author,@Field("link") String link);
+	Observable<String> getNaviLike(@Header("Cookie")String name,@Header("Cookie")String psw,@Field("title")String title, @Field("author")String author, @Field("link") String link);
 	
 	@POST("https://www.wanandroid.com/lg/{id}/json")
-    Observable<String> getKADelete(@Path("id")int id);
+    Observable<String> getKADelete(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("id")int id);
 
 	@FormUrlEncoded
 	@POST("lg/uncollect/{id}/json")
-    Observable<String> disCollect(@Path("id")int id,@Field("originId")int originId);
+    Observable<String> disCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("id")int id,@Field("originId")int originId);
 }

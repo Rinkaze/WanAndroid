@@ -22,10 +22,10 @@ public interface EveryWhereApi {
     Observable<HomeBanner> getBanninit();
 
     @POST("lg/collect/{id}/json")
-    Observable<String> getCollect(@Path("id") int id);
+    Observable<String> getCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("id") int id);
 
     @POST("lg/uncollect_originId/{disid}/json")
-    Observable<String> getDisCollect(@Path("disid") int disid);
+    Observable<String> getDisCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("disid") int disid);
 
 
 }

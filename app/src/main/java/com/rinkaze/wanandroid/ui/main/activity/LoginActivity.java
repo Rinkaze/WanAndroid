@@ -95,6 +95,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                 String psw = mEtPsw.getText().toString().trim();
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(psw)){
                     mPresenter.login(name,psw);
+                    SpUtil.setParam(Constants.PASSWORD,psw);
                     showLoading();
                 }else {
                     ToastUtil.showShort("用户名或密码不能为空");
@@ -111,6 +112,7 @@ public class LoginActivity extends BaseActivity<LoginView, LoginPresenter> imple
                 if (!TextUtils.isEmpty(regName) && !TextUtils.isEmpty(regPsw)){
                     if (regPsw.equals(regRepsw)){
                         mPresenter.register(regName,regPsw,regRepsw);
+                        SpUtil.setParam(Constants.PASSWORD,regPsw);
                         showLoading();
                     }else {
                         ToastUtil.showShort("两次密码输入不一致，请重新输入");
