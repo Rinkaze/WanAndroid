@@ -30,4 +30,6 @@
     <string name="title">用来学习的安卓的微信小程序</string>
     <string name="author">author</string>
     <string name="niceData">niceData</string>
+    <string name="editText">发现更多干货</string>
+    <string name="hot_search">热门搜索</string>
 </resources>

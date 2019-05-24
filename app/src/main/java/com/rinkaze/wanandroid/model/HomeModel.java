@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.rinkaze.wanandroid.base.BaseModel;
+import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.CollectBean;
 import com.rinkaze.wanandroid.bean.HomeBanner;
 import com.rinkaze.wanandroid.bean.HomeBean;
@@ -14,13 +15,15 @@ import com.rinkaze.wanandroid.net.HttpUtils;
 import com.rinkaze.wanandroid.net.ResultCallBack;
 import com.rinkaze.wanandroid.net.RxUtils;
 import com.rinkaze.wanandroid.net.WanAndroidApi;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.rinkaze.wanandroid.utils.SpUtil;
 
 import io.reactivex.disposables.Disposable;
 
 public class HomeModel extends BaseModel {
+
+    private String name;
+    private String psw;
+
     public void getHomeInit(int num, final ResultCallBack<HomeBean> resultCallBack){
         HttpUtils.getInstance().getApiserver(EveryWhereApi.baseUrl,EveryWhereApi.class)
                 .getHomeInit(num)
@@ -74,8 +77,10 @@ public class HomeModel extends BaseModel {
 
     private static final String TAG = "HomeModel";
     public void getLike(int id, final ResultCallBack<String>resultCallBack){
+        name = (String) SpUtil.getParam(Constants.USERNAME, "");
+        psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
         HttpUtils.getInstance().getApiserver(EveryWhereApi.baseUrl,EveryWhereApi.class)
-                .getCollect(id)
+                .getCollect(name,psw,id)
                 .compose(RxUtils.<String>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<String>() {
                     @Override
@@ -95,8 +100,10 @@ public class HomeModel extends BaseModel {
                 });
     }
     public void getDisLike(int disid, final ResultCallBack<String>resultCallBack){
+        name = (String) SpUtil.getParam(Constants.USERNAME, "");
+        psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
         HttpUtils.getInstance().getApiserver(EveryWhereApi.baseUrl,EveryWhereApi.class)
-                .getDisCollect(disid)
+                .getDisCollect(name,psw,disid)
                 .compose(RxUtils.<String>rxObserableSchedulerHelper())
                 .subscribe(new BaseObserver<String>() {
                     @Override
@@ -123,4 +130,6 @@ public class HomeModel extends BaseModel {
                 });
     }
 
+    public static class SearchModel extends BaseModel {
+    }
 }

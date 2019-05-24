@@ -80,4 +80,6 @@ public interface WanAndroidApi {
     @FormUrlEncoded
     @POST("lg/collect/addtool/json")
     Observable<String> getNaviLike(@Field("name")String name,@Field("link") String link);
+
+
 }
