@@ -93,4 +93,6 @@ public interface WanAndroidApi {
 	@FormUrlEncoded
 	@POST("lg/uncollect/{id}/json")
     Observable<JSONObject> disCollect(@Path("id")int id, @Field("originId")int originId, @Header("Cookie")String name, @Header("Cookie")String psw);
+	@POST("lg/collect/{id}/json")
+    Observable<JSONObject> getCollect(@Header("Cookie")String name,@Header("Cookie")String psw,@Path("id")int id);
 }

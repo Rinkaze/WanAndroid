@@ -30,7 +30,6 @@ import butterknife.BindView;
 
 public class WebViewActivity extends BaseActivity<WebView, WebPresenter> implements WebView {
 
-
     @BindView(R.id.container)
     RelativeLayout mContainer;
     @BindView(R.id.web_back)
@@ -61,9 +60,9 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
     protected void initData() {
         super.initData();
 
-        url = getIntent().getStringExtra("url");
+        url = getIntent().getStringExtra("link");
 
-        author = getIntent().getStringExtra("name");
+        author = getIntent().getStringExtra("author");
         title = getIntent().getStringExtra("title");
 
 
@@ -124,7 +123,6 @@ public class WebViewActivity extends BaseActivity<WebView, WebPresenter> impleme
                 startActivity(Intent.createChooser(intent1, url));
                 break;
             case 2:
-
                 boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
                 String name = (String) SpUtil.getParam(Constants.USERNAME, "");
                 if (param) {

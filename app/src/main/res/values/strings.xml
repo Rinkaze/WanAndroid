@@ -40,7 +40,11 @@
     <string name="text3">如果您有任何好的建议：</string>
     <string name="text4">关于网站排版\n关于新增常用网址以及工具\n未来你希望增加的功能等</string>
     <string name="text5">\t可以在</string>
-    <string name="text6">目中以issue的形式提出，我将及时跟进。</string>
+    <string name="text6">项目中以issue的形式提出，我将及时跟进。</string>
     <string name="text7">\t\t如果您希望长期关注本站，可以加入我们的QQ群：\n591683946</string>
     <string name="url"><u>https://github.com/hongyangAndroid/xueandroid</u></string>
+    <string name="yuanma">源码位置</string>
+    <string name="text8">\t\t本软件开源，如果你发现任何错误，不要犹豫，马上\n</string>
+    <string name="githup"><u>GitHub</u></string>
+    <string name="text9">点击,在上面发起issue或者提交pull\n</string>
 </resources>
