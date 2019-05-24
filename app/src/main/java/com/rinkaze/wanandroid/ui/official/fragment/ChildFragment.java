@@ -3,7 +3,6 @@ package com.rinkaze.wanandroid.ui.official.fragment;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import com.rinkaze.wanandroid.base.Constants;
 import com.rinkaze.wanandroid.bean.official.FeedArticleListData;
 import com.rinkaze.wanandroid.R;
 import com.rinkaze.wanandroid.base.BaseFragment;
-import com.rinkaze.wanandroid.net.WanAndroidApi;
 import com.rinkaze.wanandroid.presenter.officialpresenter.ChildPresenter;
 import com.rinkaze.wanandroid.ui.main.activity.LoginActivity;
 import com.rinkaze.wanandroid.ui.official.activity.WebViewActivity;
@@ -32,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
@@ -48,6 +45,7 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
     @BindView(R.id.official_smart)
     SmartRefreshLayout mOfficialSmart;
 
+
     Unbinder unbinder1;
     private int page = 1;
     private int orId = -1;
@@ -56,6 +54,8 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
     private int id;
     private String link;
     private String author;
+    private String username;
+    private String psw;
 
     @Override
     protected ChildPresenter initPresenter() {
@@ -74,6 +74,8 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
         adapter = new OfficialChildAdapter(getActivity());
         id = getArguments().getInt("id");
         Log.e(TAG, "initView: " + id);
+        username = (String) SpUtil.getParam(Constants.USERNAME, "");
+        psw = (String) SpUtil.getParam(Constants.PASSWORD, "");
     }
     @Override
     protected void initData() {
@@ -137,7 +139,7 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
                 String name = (String) SpUtil.getParam(Constants.USERNAME, "");
 
                 if (param){
-                    mPresenter.getCollect(id);
+                    mPresenter.getCollect(position);
                    ToastUtil.showShort("已收藏");
 
                 }else {
@@ -154,7 +156,7 @@ public class ChildFragment extends BaseFragment<ChildView, ChildPresenter> imple
                 String name = (String) SpUtil.getParam(Constants.USERNAME, "");
 
                 if (param){
-                    mPresenter.getDiscollect(id,-1);
+                    mPresenter.getDiscollect(id,-1,username,psw);
                     ToastUtil.showShort("取消收藏");
 
                 }else {

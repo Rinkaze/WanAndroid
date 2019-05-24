@@ -47,8 +47,8 @@ public class ChildPresenter extends BasePresenter<ChildView> {
         });
     }
 
-    public void getDiscollect(int id,int originId){
-        mChildMoudle.getDisCollect(id, originId, new ResultCallBack<String>() {
+    public void getDiscollect(int id,int originId,String name,String psw){
+        mChildMoudle.getDisCollect(id, originId,name,psw, new ResultCallBack<String>() {
             @Override
             public void onSuccess(String bean) {
                 mMvpView.getDiscollect(bean);
