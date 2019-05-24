@@ -151,6 +151,7 @@ public class MainFragment extends BaseFragment<HomeView, HomePresenter> implemen
         ToastUtil.showShort(msg2);
     }
 
+    //返回RecyclerView顶部
     public void scrollTop() {
         if (mRecycler != null) {
             mRecycler.smoothScrollToPosition(0);

@@ -42,6 +42,8 @@ public interface IListService {
     @GET("project/list/{page}/json?")
     Observable<ProjectListBean> getProjectListData(@Path("page") int page,@Query("cid") int cid);
     //收藏
+
+//    https://www.wanandroid.com/lg/collect/1165/json
     @POST("lg/collect/{id}/json")
     Observable<JSONObject> getCollect(@Header("Cookie")String name, @Header("Cookie")String psw, @Path("id") int id);
 

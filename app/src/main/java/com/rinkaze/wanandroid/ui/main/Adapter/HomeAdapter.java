@@ -91,6 +91,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             myView.data.setText(datasBean.getNiceDate());
             myView.superCh.setText(datasBean.getChapterName());
             myView.title.setText(datasBean.getTitle());
+            if (datasBean.isCollect()){
+                Glide.with(context).load(R.mipmap.follow).into(myView.collect);
+            }else {
+                Glide.with(context).load(R.mipmap.follow_unselected).into(myView.collect);
+            }
 
             myView.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

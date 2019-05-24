@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rinkaze.wanandroid.R;
@@ -37,6 +38,7 @@ import com.rinkaze.wanandroid.ui.main.fragment.MainFragment;
 import com.rinkaze.wanandroid.ui.navigation.fragment.NaviFragment;
 import com.rinkaze.wanandroid.ui.official.fragment.OfficialFragment;
 import com.rinkaze.wanandroid.ui.project.fragment.ProjectFragment;
+import com.rinkaze.wanandroid.ui.todo.activity.ToDoActivity;
 import com.rinkaze.wanandroid.utils.SpUtil;
 import com.rinkaze.wanandroid.utils.ToastUtil;
 import com.rinkaze.wanandroid.utils.UIModeUtil;
@@ -61,6 +63,8 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
     DrawerLayout mDl;
     @BindView(R.id.nv)
     NavigationView mNv;
+    @BindView(R.id.search)
+    ImageView search;
     private ArrayList<Fragment> fragments;
     private FragmentManager fragmentManager;
     private final int MAIN_TYPE = 0;
@@ -95,6 +99,7 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         mDl.addDrawerListener(toggle);
         toggle.syncState();
+        setSupportActionBar(mToolBar);
         initNav();
         initTab();
         initFragment();
@@ -142,6 +147,12 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
 
     @Override
     protected void initListener() {
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,SearchActivity.class));
+            }
+        });
         mTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -225,7 +236,8 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                         }
                         break;
                     case R.id.nav_todo:
-                        //TODO
+                        Intent intent = new Intent(MainActivity.this, ToDoActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.nav_night:
                         //夜间模式
@@ -254,7 +266,6 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                                     ToastUtil.showShort("已退出登录");
                                     hideLoading();
                                 }
-
                                 @Override
                                 public void onFail(String msg) {
                                     ToastUtil.showShort(msg);
@@ -293,7 +304,9 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                     startActivityForResult(new Intent(this,LoginActivity.class),100);
                 break;
         }
+
     }
+
 
     @Override
     protected void onResume() {
