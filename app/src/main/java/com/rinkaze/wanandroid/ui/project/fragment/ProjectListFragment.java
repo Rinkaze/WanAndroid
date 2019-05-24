@@ -115,7 +115,9 @@ public class ProjectListFragment extends BaseFragment<ProjectClassifyView, Proje
             public void onItemClick(String link,String title,String author, int position) {
                 Intent intent = new Intent(getActivity(), ProSubActivity.class);
                 Bundle bundle = new Bundle();
-               
+                bundle.putString("link",mList.get(position).getLink());
+                bundle.putString("name",mList.get(position).getTitle());
+                bundle.putString("author",mList.get(position).getAuthor());
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
             }

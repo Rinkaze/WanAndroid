@@ -216,7 +216,12 @@ public class MainActivity extends BaseActivity<EmptyView, EmptyPresenter> implem
                 switch (menuItem.getItemId()) {
                     case R.id.nav_collect:
                         //收藏
-                        startActivity(new Intent(MainActivity.this,CollectActivity.class));
+                        if ((boolean)SpUtil.getParam(Constants.LOGIN,false)) {
+                            startActivity(new Intent(MainActivity.this, CollectActivity.class));
+                        }else {
+                            ToastUtil.showShort("请先登录");
+                            startActivityForResult(new Intent(MainActivity.this,LoginActivity.class),100);
+                        }
                         break;
                     case R.id.nav_todo:
                         //TODO
