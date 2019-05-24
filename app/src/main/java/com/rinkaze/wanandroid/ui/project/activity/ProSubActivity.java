@@ -89,15 +89,14 @@ public class ProSubActivity extends BaseActivity<NaviLikeView, NaviLikePresenter
         switch (item.getItemId()) {
             case 1:
                 Intent intent1 = new Intent(Intent.ACTION_SEND);
-                intent1.setType("*/*");
-                intent1.putExtra(Intent.EXTRA_STREAM, link);
-                startActivity(Intent.createChooser(intent1, "Share to..."));
+                intent1.setType("text/plain");
+                intent1.putExtra(Intent.EXTRA_TEXT, link);
+                startActivity(Intent.createChooser(intent1, link));
                 break;
             case 2:
                 boolean param = (boolean) SpUtil.getParam(Constants.LOGIN, false);
                 String name = (String) SpUtil.getParam(Constants.USERNAME, "");
-
-                if (param) {
+                if (param==true) {
                     mPresenter.initNaviLike(title,author,link);
                 } else {
                     startActivityForResult(new Intent(ProSubActivity.this, LoginActivity.class), 100);
